@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import {
   Header,
   Button,
@@ -15,6 +15,7 @@ import { LeftMenuLayout, ResponsiveSwitcher, cardsFrom } from './layouts';
 export const QUERY_ACTIVE_PROJECTS = gql`
   query ActiveProjects {
     activeProjects @client {
+      id
       title
       sourceGroup
       description
@@ -30,16 +31,18 @@ const ButtonSignin = () =>
     <Button inverted fluid>sign in to admin</Button>
   </Link>
 
-const HomeCard = ({item: {sourceGroup, title, description, needDate, needStart, needEnd}}) =>
-  <Card fluid={true}>
-    <Card.Content header={title} meta={sourceGroup} description={description}/>
-    <Card.Content extra>
-      {needDate}<br/>
-      {needStart} - {needEnd}
-    </Card.Content>
-  </Card>
+const HomeCard = ({item: {id, sourceGroup, title, description, needDate, needStart, needEnd}}) =>
+  <Link to={`/help/${id}`}>
+    <Card fluid={true}>
+      <Card.Content header={title} meta={sourceGroup} description={description}/>
+      <Card.Content extra>
+        {needDate}<br/>
+        {needStart} - {needEnd}
+      </Card.Content>
+    </Card>
+  </Link>
 
-const HomeCards = ({cols}) =>
+const HomeCards = () =>
   <Query query={QUERY_ACTIVE_PROJECTS}>
     {({ data: { activeProjects } }) =>
       <ResponsiveSwitcher
@@ -50,15 +53,25 @@ const HomeCards = ({cols}) =>
     }
   </Query>
 
+const HomeContent = () =>
+  <div>
+    <Route path='/' exact render={() =>
+      <HomeCards />
+      } />
+    <Route path='/help/:id' render={({match: {params: {id}}}) => {
+        return <div>Project Detail #{id}</div>
+      }} />
+  </div>
+
 const HomeTitleLarge = () =>
   <Header as="h1" size="huge" icon textAlign="center" inverted color="grey">
-    <Image verticalAlign='top' src="logo.jpeg" style={{width: '100%'}} centered />
+    <Image verticalAlign='top' src="/logo.jpeg" style={{width: '100%'}} centered />
     <p>work for<br/>the man</p>
   </Header>
 
 const HomeTitleSmall = () =>
   <Header as="h1" size="small" icon textAlign="center" inverted color="grey">
-    <Image verticalAlign='top' src="logo.jpeg" size="tiny" centered />
+    <Image verticalAlign='top' src="/logo.jpeg" size="tiny" centered />
     <p>work for<br/>the man</p>
   </Header>
 
@@ -86,7 +99,7 @@ const HomePageMobile = () =>
       <HomeTitle />
     </Grid.Column>
     <Grid.Column style={{minHeight: '100%'}}>
-      <HomeCards />
+      <HomeContent />
     </Grid.Column>
     <Grid.Column style={{backgroundColor: '#000'}}>
       <ButtonSignin />
@@ -94,7 +107,7 @@ const HomePageMobile = () =>
   </Grid>
 
 const HomePageLarge = () =>
-  <LeftMenuLayout left={<HomeSplash />} right={<HomeCards />} />
+  <LeftMenuLayout left={<HomeSplash />} right={<HomeContent />} />
 
 class HomePage extends Component {
   static async getInitialProps({ req, res, match, history, location, ...ctx }) {
