@@ -16,7 +16,6 @@ server
 
     try {
       const customRenderer = node => {
-        // const App = <div>{node}</div>;
         const App = node;
         const html = renderToString(App);
         const helmet = Helmet.renderStatic();
@@ -38,7 +37,6 @@ server
     } catch (error) {
       console.log(error)
       res.json(error);
-      // res.send(error);
     }
   });
 

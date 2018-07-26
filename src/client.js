@@ -13,14 +13,6 @@ ensureReady(routes).then(data =>
     </BrowserRouter>,
     document.getElementById('root')
   )
-  // hydrate(
-  //   <div>
-  //     <BrowserRouter>
-  //       <After data={data} routes={routes} />
-  //     </BrowserRouter>
-  //   </div>,
-  //   document.getElementById('root')
-  // )
 );
 
 if (module.hot) {

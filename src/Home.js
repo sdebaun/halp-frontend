@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import logo from './react.svg';
+// import logo from './react.svg';
 // import './Home.css';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import {
-  Container,
+  // Container,
   Header,
-  Menu,
-  Segment,
+  // Menu,
+  // Segment,
   Button,
   Image,
   Grid,
@@ -45,7 +45,7 @@ const HomeSigninButton = () =>
 
 const HomePage = () =>
   <Grid stackable>
-    <Grid.Column color="black" width={4}>
+    <Grid.Column width={4} style={{backgroundColor: '#000', paddingLeft: '3rem'}}>
       <HomeTitle />
       <Responsive as={HomeSigninButton} {...Responsive.onlyTablet} />
       <Responsive as={HomeSigninButton} {...Responsive.onlyComputer} />
@@ -55,7 +55,7 @@ const HomePage = () =>
       <Responsive as={HomeCards} cols={2} {...Responsive.onlyTablet} />
       <Responsive as={HomeCards} cols={3} {...Responsive.onlyComputer} />
     </Grid.Column>
-    <Responsive as={Grid.Column} color="black" width={12} {...Responsive.onlyMobile}>
+    <Responsive as={Grid.Column} width={12} {...Responsive.onlyMobile} style={{backgroundColor: '#000'}}>
       <HomeSigninButton />
     </Responsive>
   </Grid>
@@ -66,22 +66,7 @@ class HomeRoute extends Component {
   }
 
   render() {
-    return (
-      <HomePage />
-    )
-  //   return (
-  //     <div className="Home">
-  //       <div className="Home-header">
-  //         <img src={logo} className="Home-logo" alt="logo" />
-  //         <h2>Welcome to After.js P: {this.props.whatever} CT: {this.props.customThing}</h2>
-  //       </div>
-  //       <p className="Home-intro">
-  //         To get started, edit <code>src/Home.js</code> or{' '}
-  //         <code>src/About.js</code>and save to reload.
-  //       </p>
-  //       <Link to="/about">About -></Link>
-  //     </div>
-  //   );
+    return <HomePage />
   }
 }
 

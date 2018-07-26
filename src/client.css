@@ -1,3 +1,5 @@
+/* height stuff needed to get full-page colored background columns */
+
 html, body {
   height: 100%;
 }
