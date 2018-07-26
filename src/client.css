@@ -22,5 +22,5 @@ body {
 }
 
 .ui.grid .column {
-  overflow-y: scroll;  
+  overflow-y: auto;  
 }

@@ -3,16 +3,16 @@ import { Link, Route } from 'react-router-dom';
 import {
   Header,
   Button,
-  Card,
   Menu,
   Icon,
   Label,
 } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
-import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher, cardsFrom } from './layouts';
+import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher } from '../layouts';
 
-import { QUERY_ACTIVE_PROJECTS } from './Home'
-import { Query } from 'react-apollo'
+import AdminCards from './AdminCards';
+import AdminProject from './AdminProject';
+import AdminAddProject from './AdminAddProject';
 
 const ButtonSignOut = () =>
   <Link to='/'>
@@ -37,33 +37,16 @@ const AdminHelmet = () =>
     <title>Admin : HALP</title>
   </Helmet>
 
-const AdminCard = ({item: {sourceGroup, title, description, needDate, needStart, needEnd}}) =>
-  <Card fluid={true}>
-    <Card.Content header={title} meta={sourceGroup} description={description}/>
-    <Card.Content extra>
-      {needDate}<br/>
-      {needStart} - {needEnd}
-    </Card.Content>
-  </Card>
-
-const AdminCards = ({cols}) =>
-  <Query query={QUERY_ACTIVE_PROJECTS}>
-    {({ data: { activeProjects } }) =>
-      <ResponsiveSwitcher
-        mobile={<Card.Group itemsPerRow={1}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
-        tablet={<Card.Group itemsPerRow={2}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
-        computer={<Card.Group itemsPerRow={3}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
-        />
-    }
-  </Query>
-
 const AdminContent = () =>
   <div>
     <Route path='/admin' exact render={() =>
       <AdminCards />
       } />
     <Route path='/admin/add' exact render={() =>
-        <div>AdminAddProject Form</div>
+      <AdminAddProject />
+      } />
+    <Route path='/admin/project/:id' render={() =>
+      <AdminProject />
       } />
   </div>
 
