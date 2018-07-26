@@ -56,18 +56,18 @@ const _SigninPage = ({history}) =>
                 }
               })
           }}>
-          {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) =>
-            <Form>
-              {errors.failure && <Message>{errors.failure}</Message>}
-              {!errors.failure && <Message>Sign in to administer HALP.</Message>}
+          {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, isValid}) =>
+            <Form onSubmit={handleSubmit}>
+              {!errors.failure && <Message info attached="bottom">Sign in to administer HALP.</Message>}
+              {errors.failure && <Message negative attached="bottom">{errors.failure}</Message>}
               <Form.Input name='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' type='email' onChange={handleChange} onBlur={handleBlur} value={values.email}/>
-              {touched.email && errors.email && <Message>{errors.email}</Message>}
+              {touched.email && errors.email && <Message negative attached="bottom">{errors.email}</Message>}
               <Form.Input name='password' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' onChange={handleChange} onBlur={handleBlur} value={values.password} />
-              {touched.password && errors.password && <Message>{errors.password}</Message>}
-              <Button color='green' fluid size='large' type='submit' disabled={isSubmitting} onClick={handleSubmit}>
+              {touched.password && errors.password && <Message negative attached="bottom">{errors.password}</Message>}
+              <Button color='green' fluid size='large' type='submit' disabled={isSubmitting || !isValid}>
                 sign in
               </Button>
-              <Button fluid size='large'>back</Button>
+              <Button fluid size='large' type='button' onClick={history.goBack}>back</Button>
             </Form>
           }
         </Formik>

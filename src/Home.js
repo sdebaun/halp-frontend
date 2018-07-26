@@ -26,7 +26,7 @@ const QUERY_ACTIVE_PROJECTS = gql`
 `
 
 const HomeTitle = () =>
-  <div>
+  <div style={{paddingBottom: '2rem'}}>
     <Helmet>
       <title>Work for the Man</title>
     </Helmet>
@@ -56,7 +56,7 @@ const HomeCards = ({cols}) =>
 
 const HomeSigninButton = () =>
   <Link to={'/signin'}>
-    <Button inverted fluid>sign in</Button>
+    <Button inverted fluid>sign in to admin</Button>
   </Link>
 
 const HomePage = () =>
