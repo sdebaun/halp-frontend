@@ -15,6 +15,15 @@ import {
 } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
 
+const MOCK_CARD = {
+  sourceGroup: 'Temple Guardians',
+  title: 'Defend the Temple',
+  description: 'Help defend the temple against invasion by evil space aliens that want to steal our pants.',
+  needDate: 'Sunday 30 Aug',
+  needStart: '10a',
+  needEnd: '2p',
+}
+
 const HomeTitle = () =>
   <div>
     <Helmet>
@@ -26,18 +35,18 @@ const HomeTitle = () =>
     </Header>
   </div>
 
-const HomeCard = () =>
+const HomeCard = ({item: {sourceGroup, title, description, needDate, needStart, needEnd}}) =>
   <Card fluid={true}>
-    <Card.Content>
-      <Card.Description>
-        whatever!!!!!!!!!!!!
-      </Card.Description>
+    <Card.Content header={title} meta={sourceGroup} description={description}/>
+    <Card.Content extra>
+      {needDate}<br/>
+      {needStart} - {needEnd}
     </Card.Content>
   </Card>
 
 const HomeCards = ({cols}) =>
   <Card.Group itemsPerRow={cols}>
-    {Array.from({length: cols * 20}, (x,i) => <HomeCard key={i}/>)}
+    {Array.from({length: cols * 20}, (x,i) => <HomeCard key={i} item={MOCK_CARD}/>)}
   </Card.Group>
 
 const HomeSigninButton = () =>
