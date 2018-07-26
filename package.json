@@ -25,6 +25,7 @@
     "react-apollo": "^2.1.9",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
+    "react-powerplug": "^1.0.0-rc.1",
     "react-router-dom": "^4.2.2",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.82.1",
