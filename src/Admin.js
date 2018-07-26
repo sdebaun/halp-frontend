@@ -60,11 +60,7 @@ const AdminCards = ({cols}) =>
 const AdminContent = () =>
   <div>
     <Route path='/admin' exact render={() =>
-      <ResponsiveSwitcher
-        mobile={<AdminCards cols={1} />}
-        tablet={<AdminCards cols={2} />}
-        computer={<AdminCards cols={3} />}
-        />
+      <AdminCards />
       } />
     <Route path='/admin/add' exact render={() =>
         <div>AdminAddProject Form</div>
@@ -105,7 +101,7 @@ const AdminPageMobile = () =>
 const AdminPageLarge = () =>
   <LeftMenuLayout left={<AdminMenu />} right={<AdminContent />} />
 
-class AdminRoute extends Component {
+class AdminPage extends Component {
   static async getInitialProps({ req, res, match, history, location, ...ctx }) {
     return { whatever: 'stuff', customThing: ctx.customThing };
   }
@@ -124,4 +120,4 @@ class AdminRoute extends Component {
   }
 }
 
-export default AdminRoute;
+export default AdminPage;

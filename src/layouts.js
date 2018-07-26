@@ -9,10 +9,10 @@ import { Toggle } from 'react-powerplug';
 
 export const LeftMenuLayout = ({left, right}) =>
   <Grid>
-    <Grid.Column width={4} style={{backgroundColor: '#000', paddingLeft: '3rem'}}>
+    <Grid.Column width={4} style={{backgroundColor: '#000', paddingLeft: '2.5rem'}}>
       {left}
     </Grid.Column>
-    <Grid.Column width={12}>
+    <Grid.Column as={Segment} width={12}>
       {right}
     </Grid.Column>
   </Grid>
@@ -24,20 +24,13 @@ export const DrawerMenuLayout = ({header, drawer, main}) =>
         <Sidebar as={Segment} inverted visible={on} onHide={toggle} animation='overlay'>
           {drawer}
         </Sidebar>
-        <Sidebar.Pusher style={{marginTop: '4rem'}}>
+        <Sidebar.Pusher style={{marginTop: '5rem'}}>
             {header({toggle})}
             {main}
         </Sidebar.Pusher>
       </Sidebar.Pushable>
     }
   </Toggle>
-
-// export const ResponsiveSwitcher = ({mobile, tablet, computer}) =>
-//   <div style={{height: '100%'}}>
-//     <Responsive {...Responsive.onlyComputer}>{computer}</Responsive>
-//     <Responsive {...Responsive.onlyTablet}>{tablet}</Responsive>
-//     <Responsive {...Responsive.onlyMobile}>{mobile}</Responsive>
-//   </div>
 
 export const ResponsiveSwitcher = ({mobile, tablet, computer}) =>
   <div style={{height: '100%'}}>
