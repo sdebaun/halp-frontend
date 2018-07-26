@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Header,
   Button,
@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
-const ACTIVE_PROJECTS = gql`
+const QUERY_ACTIVE_PROJECTS = gql`
   query ActiveProjects {
     activeProjects @client {
       title
@@ -46,7 +46,7 @@ const HomeCard = ({item: {sourceGroup, title, description, needDate, needStart, 
   </Card>
 
 const HomeCards = ({cols}) =>
-  <Query query={ACTIVE_PROJECTS}>
+  <Query query={QUERY_ACTIVE_PROJECTS}>
     {({ data: { activeProjects } }) => 
       <Card.Group itemsPerRow={cols}>
         {activeProjects.map((p, idx) => <HomeCard key={idx} item={p}/>)}
@@ -55,7 +55,9 @@ const HomeCards = ({cols}) =>
   </Query>
 
 const HomeSigninButton = () =>
-  <Button inverted fluid>sign in</Button>
+  <Link to={'/signin'}>
+    <Button inverted fluid>sign in</Button>
+  </Link>
 
 const HomePage = () =>
   <Grid stackable>
