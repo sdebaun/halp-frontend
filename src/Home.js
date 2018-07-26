@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-// import logo from './react.svg';
-// import './Home.css';
 // import { Link } from 'react-router-dom';
 import {
-  // Container,
   Header,
-  // Menu,
-  // Segment,
   Button,
   Image,
   Grid,
@@ -14,15 +9,21 @@ import {
   Card,
 } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 
-const MOCK_CARD = {
-  sourceGroup: 'Temple Guardians',
-  title: 'Defend the Temple',
-  description: 'Help defend the temple against invasion by evil space aliens that want to steal our pants.',
-  needDate: 'Sunday 30 Aug',
-  needStart: '10a',
-  needEnd: '2p',
-}
+const ACTIVE_PROJECTS = gql`
+  query ActiveProjects {
+    activeProjects @client {
+      title
+      sourceGroup
+      description
+      needDate
+      needStart
+      needEnd
+    }
+  }
+`
 
 const HomeTitle = () =>
   <div>
@@ -45,9 +46,13 @@ const HomeCard = ({item: {sourceGroup, title, description, needDate, needStart, 
   </Card>
 
 const HomeCards = ({cols}) =>
-  <Card.Group itemsPerRow={cols}>
-    {Array.from({length: cols * 20}, (x,i) => <HomeCard key={i} item={MOCK_CARD}/>)}
-  </Card.Group>
+  <Query query={ACTIVE_PROJECTS}>
+    {({ data: { activeProjects } }) => 
+      <Card.Group itemsPerRow={cols}>
+        {activeProjects.map((p, idx) => <HomeCard key={idx} item={p}/>)}
+      </Card.Group>        
+    }
+  </Query>
 
 const HomeSigninButton = () =>
   <Button inverted fluid>sign in</Button>

@@ -1,10 +1,12 @@
-import React from 'react';
 import express from 'express';
-import { render } from '@jaredpalmer/after';
-import routes from './routes';
-import { renderToString } from 'react-dom/server';
-import Document from './Document';
+import React from 'react';
 import { Helmet } from 'react-helmet';
+import { renderToString } from 'react-dom/server';
+import { render } from '@jaredpalmer/after';
+import Document from './Document';
+import routes from './routes';
+import createApolloClient from './createApolloClient';
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -15,11 +17,16 @@ server
   .get('/*', async (req, res) => {
 
     try {
+      const client = createApolloClient({ ssrMode: true })
+  
       const customRenderer = node => {
-        const App = node;
-        const html = renderToString(App);
-        const helmet = Helmet.renderStatic();
-        return { html, helmet }
+        const App = <ApolloProvider client={client}>{node}</ApolloProvider>;
+        return getDataFromTree(App).then(() => {
+          const initialApolloState = client.extract()
+          const html = renderToString(App);
+          const helmet = Helmet.renderStatic();
+          return { html, helmet, initialApolloState }
+        })
       }
 
       const html = await render({

@@ -5,12 +5,18 @@ import { ensureReady, After } from '@jaredpalmer/after';
 import './client.css';
 import 'semantic-ui-css/semantic.min.css';
 import routes from './routes';
+import createApolloClient from './createApolloClient';
+import { ApolloProvider } from 'react-apollo';
+
+const client = createApolloClient({ ssrMode: false })
 
 ensureReady(routes).then(data =>
   hydrate(
-    <BrowserRouter>
-      <After data={data} routes={routes} />
-    </BrowserRouter>,
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <After data={data} routes={routes} />
+      </BrowserRouter>
+    </ApolloProvider>,
     document.getElementById('root')
   )
 );
