@@ -20,7 +20,6 @@ export default [
   },
   {
     path: '/admin',
-    exact: true,
     component: asyncComponent({
       loader: () => import('./Admin'), // required
       Placeholder: () => <div>...LOADING...</div>, // this is optional, just returns null by default

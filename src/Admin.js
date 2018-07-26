@@ -1,45 +1,33 @@
 import React, { Component } from 'react';
+import { Link, Route } from 'react-router-dom';
 import {
   Header,
   Button,
-  Image,
-  Grid,
-  Responsive,
   Card,
   Menu,
-  Container,
-  Sidebar,
-  Segment,
   Icon,
   Label,
 } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
-import { Toggle } from 'react-powerplug';
+import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher } from './layouts';
 
-const LeftMenuLayout = ({left, right}) =>
-  <Grid>
-    <Grid.Column width={4} style={{backgroundColor: '#000', paddingLeft: '3rem'}}>
-      {left}
-    </Grid.Column>
-    <Grid.Column width={12}>
-      {right}
-    </Grid.Column>
-  </Grid>
+const ButtonSignOut = () =>
+  <Link to='/'>
+    <Button fluid basic inverted>sign out</Button>
+  </Link>
 
-const DrawerMenuLayout = ({header, drawer, main}) =>
-  <Toggle initial={false}>
-    {({on, toggle}) =>
-      <Sidebar.Pushable>
-        <Sidebar as={Segment} inverted visible={on} onHide={toggle} animation='overlay'>
-          {drawer}
-        </Sidebar>
-        <Sidebar.Pusher style={{marginTop: '4rem'}}>
-            {header({toggle})}
-            {main}
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
-    }
-  </Toggle>
+const ButtonCreateProject = () =>
+  <Link to='/admin/add'>
+    <Button fluid primary size='huge'>
+      + add project
+    </Button>
+  </Link>
+
+const MenuItemLabelled = ({label, count, color}) =>
+  <Menu.Item name={label}>
+    <Label color={color}>{count}</Label>
+    {label}
+  </Menu.Item>
 
 const AdminHelmet = () =>
   <Helmet>
@@ -56,41 +44,37 @@ const AdminCards = ({cols}) =>
     <AdminCard />
   </Card.Group>
 
-// const AdminPage = () =>
-//   <LeftMenuLayout left={<AdminTitle />} right={<AdminCards cols={3} />} />
-
-const AdminHeader = () =>
-  <Header as="h1" size="huge" textAlign="center" inverted color="grey">
-    HALP
-  </Header>
+const AdminContent = () =>
+  <div>
+    <Route path='/admin' exact render={() =>
+      <ResponsiveSwitcher
+        mobile={<AdminCards cols={1} />}
+        tablet={<AdminCards cols={2} />}
+        computer={<AdminCards cols={3} />}
+        />
+      } />
+    <Route path='/admin/add' exact render={() =>
+        <div>AdminAddProject Form</div>
+      } />
+  </div>
 
 const AdminMenu = () =>
   <Menu inverted vertical fluid>
+    <Menu.Item header>
+      <Header as="h1" size="huge" textAlign="center" inverted color="grey">
+        HALP
+      </Header>
+    </Menu.Item>
     <Menu.Item>
       <ButtonCreateProject />
     </Menu.Item>
-    <Menu.Item name='active'>
-      <Label color='green'>1</Label>
-      active
-    </Menu.Item>
-    <Menu.Item name='closed'>
-    <Label color='grey'>0</Label>
-      closed
-    </Menu.Item>
-    <Menu.Item name='old'>
-      <Label color='grey'>0</Label>
-      old
-    </Menu.Item>
+    <MenuItemLabelled label='active' color='green' count={1} />
+    <MenuItemLabelled label='closed' color='grey' count={0} />
+    <MenuItemLabelled label='old' color='grey' count={0} />
     <Menu.Item>
-      <Button fluid basic inverted>sign out</Button>
+      <ButtonSignOut />
     </Menu.Item>
   </Menu>
-
-const AdminNav = () =>
-  <div style={{paddingBottom: '2rem'}}>
-    <AdminHeader />
-    <AdminMenu />
-  </div>
 
 const AdminAppBar = ({toggle}) =>
   <Menu fixed='top' inverted>
@@ -98,33 +82,24 @@ const AdminAppBar = ({toggle}) =>
       <Button icon onClick={toggle}><Icon name='sidebar' /></Button>
     </Menu.Item>
     <Menu.Item position='right'>
-      <Button basic inverted>sign out</Button>
+      <ButtonSignOut />
     </Menu.Item>
   </Menu>
 
-const AdminDrawer = () =>
-  <div>
-    <AdminHeader />
-    <AdminMenu />
-  </div>
-
-const ButtonCreateProject = () =>
-    <Button fluid primary size='huge'>
-      + add project
-    </Button>
-
 const AdminPageMobile = () =>
-  <DrawerMenuLayout header={({toggle}) => <AdminAppBar toggle={toggle}/>} drawer={<AdminDrawer />} main={<AdminCards cols={1} />} />
+  <DrawerMenuLayout header={({toggle}) => <AdminAppBar toggle={toggle}/>} drawer={<AdminMenu />} main={<AdminContent />} />
 
-const AdminPageLarge = ({cols}) =>
-  <LeftMenuLayout left={<AdminNav />} right={<AdminCards cols={cols} />} />
+const AdminPageLarge = () =>
+  <LeftMenuLayout left={<AdminMenu />} right={<AdminContent />} />
 
 const AdminPageResponsive = () =>
-  <div>
+  <div style={{height: '100%'}}>
     <AdminHelmet />
-    <Responsive as={AdminPageLarge} cols={3} {...Responsive.onlyComputer} />
-    <Responsive as={AdminPageLarge} cols={2} {...Responsive.onlyTablet} />
-    <Responsive as={AdminPageMobile} {...Responsive.onlyMobile} />
+    <ResponsiveSwitcher
+      mobile={<AdminPageMobile />}
+      tablet={<AdminPageLarge />}
+      computer={<AdminPageLarge />}
+      />
   </div>
 
 class AdminRoute extends Component {
