@@ -32,6 +32,13 @@ export const DrawerMenuLayout = ({header, drawer, main}) =>
     }
   </Toggle>
 
+// export const ResponsiveSwitcher = ({mobile, tablet, computer}) =>
+//   <div style={{height: '100%'}}>
+//     <Responsive {...Responsive.onlyComputer}>{computer}</Responsive>
+//     <Responsive {...Responsive.onlyTablet}>{tablet}</Responsive>
+//     <Responsive {...Responsive.onlyMobile}>{mobile}</Responsive>
+//   </div>
+
 export const ResponsiveSwitcher = ({mobile, tablet, computer}) =>
   <div style={{height: '100%'}}>
     <Responsive {...Responsive.onlyComputer} style={{height: '100%'}}>{computer}</Responsive>
@@ -39,3 +46,6 @@ export const ResponsiveSwitcher = ({mobile, tablet, computer}) =>
     <Responsive {...Responsive.onlyMobile} style={{height: '100%'}}>{mobile}</Responsive>
   </div>
 
+
+export const cardsFrom = (CardComponent, items) =>
+  items.map((item, idx) => <CardComponent key={idx} item={item}/>)

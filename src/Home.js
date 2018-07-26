@@ -5,14 +5,14 @@ import {
   Button,
   Image,
   Grid,
-  Responsive,
   Card,
 } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import { LeftMenuLayout, ResponsiveSwitcher, cardsFrom } from './layouts';
 
-const QUERY_ACTIVE_PROJECTS = gql`
+export const QUERY_ACTIVE_PROJECTS = gql`
   query ActiveProjects {
     activeProjects @client {
       title
@@ -25,16 +25,10 @@ const QUERY_ACTIVE_PROJECTS = gql`
   }
 `
 
-const HomeTitle = () =>
-  <div style={{paddingBottom: '2rem'}}>
-    <Helmet>
-      <title>Work for the Man</title>
-    </Helmet>
-    <Image src="logo.jpeg" size="medium" centered />
-    <Header as="h1" size="huge" textAlign="center" inverted color="grey">
-      work for<br/>the man
-    </Header>
-  </div>
+const ButtonSignin = () =>
+  <Link to={'/signin'}>
+    <Button inverted fluid>sign in to admin</Button>
+  </Link>
 
 const HomeCard = ({item: {sourceGroup, title, description, needDate, needStart, needEnd}}) =>
   <Card fluid={true}>
@@ -47,43 +41,78 @@ const HomeCard = ({item: {sourceGroup, title, description, needDate, needStart, 
 
 const HomeCards = ({cols}) =>
   <Query query={QUERY_ACTIVE_PROJECTS}>
-    {({ data: { activeProjects } }) => 
-      <Card.Group itemsPerRow={cols}>
-        {activeProjects.map((p, idx) => <HomeCard key={idx} item={p}/>)}
-      </Card.Group>        
+    {({ data: { activeProjects } }) =>
+      <ResponsiveSwitcher
+        mobile={<Card.Group itemsPerRow={1}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
+        tablet={<Card.Group itemsPerRow={2}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
+        computer={<Card.Group itemsPerRow={3}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
+        />
     }
   </Query>
 
-const HomeSigninButton = () =>
-  <Link to={'/signin'}>
-    <Button inverted fluid>sign in to admin</Button>
-  </Link>
+const HomeTitleLarge = () =>
+  <Header as="h1" size="huge" icon textAlign="center" inverted color="grey">
+    <Image verticalAlign='top' src="logo.jpeg" style={{width: '100%'}} centered />
+    <p>work for<br/>the man</p>
+  </Header>
 
-const HomePage = () =>
+const HomeTitleSmall = () =>
+  <Header as="h1" size="small" icon textAlign="center" inverted color="grey">
+    <Image verticalAlign='top' src="logo.jpeg" size="tiny" centered />
+    <p>work for<br/>the man</p>
+  </Header>
+
+const HomeTitle = () =>
+  <ResponsiveSwitcher
+      mobile={<HomeTitleSmall />}
+      tablet={<HomeTitleLarge />}
+      computer={<HomeTitleLarge />}
+      />
+
+const HomeHelmet = () =>
+  <Helmet>
+    <title>Work for the Man</title>
+  </Helmet>
+
+const HomeSplash = () =>
+  <div>
+    <HomeTitle />
+    <ButtonSignin />
+  </div>
+
+const HomePageMobile = () =>
   <Grid stackable>
-    <Grid.Column width={4} style={{backgroundColor: '#000', paddingLeft: '3rem'}}>
+    <Grid.Column style={{backgroundColor: '#000'}}>
       <HomeTitle />
-      <Responsive as={HomeSigninButton} {...Responsive.onlyTablet} />
-      <Responsive as={HomeSigninButton} {...Responsive.onlyComputer} />
     </Grid.Column>
-    <Grid.Column width={12}>
-      <Responsive as={HomeCards} cols={1} {...Responsive.onlyMobile} />
-      <Responsive as={HomeCards} cols={2} {...Responsive.onlyTablet} />
-      <Responsive as={HomeCards} cols={3} {...Responsive.onlyComputer} />
+    <Grid.Column style={{minHeight: '100%'}}>
+      <HomeCards />
     </Grid.Column>
-    <Responsive as={Grid.Column} width={12} {...Responsive.onlyMobile} style={{backgroundColor: '#000'}}>
-      <HomeSigninButton />
-    </Responsive>
+    <Grid.Column style={{backgroundColor: '#000'}}>
+      <ButtonSignin />
+    </Grid.Column>
   </Grid>
 
-class HomeRoute extends Component {
+const HomePageLarge = () =>
+  <LeftMenuLayout left={<HomeSplash />} right={<HomeCards />} />
+
+class HomePage extends Component {
   static async getInitialProps({ req, res, match, history, location, ...ctx }) {
     return { whatever: 'stuff', customThing: ctx.customThing };
   }
 
   render() {
-    return <HomePage />
+    return (
+      <div style={{height: '100%'}}>
+        <HomeHelmet />
+        <ResponsiveSwitcher
+          mobile={<HomePageMobile />}
+          tablet={<HomePageLarge />}
+          computer={<HomePageLarge />}
+          />
+      </div>      
+    )
   }
 }
 
-export default HomeRoute;
+export default HomePage;

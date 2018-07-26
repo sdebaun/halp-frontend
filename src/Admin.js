@@ -9,7 +9,10 @@ import {
   Label,
 } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
-import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher } from './layouts';
+import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher, cardsFrom } from './layouts';
+
+import { QUERY_ACTIVE_PROJECTS } from './Home'
+import { Query } from 'react-apollo'
 
 const ButtonSignOut = () =>
   <Link to='/'>
@@ -34,15 +37,25 @@ const AdminHelmet = () =>
     <title>Admin : HALP</title>
   </Helmet>
 
-const AdminCard = () =>
+const AdminCard = ({item: {sourceGroup, title, description, needDate, needStart, needEnd}}) =>
   <Card fluid={true}>
-    <Card.Content header='Card Header' />
+    <Card.Content header={title} meta={sourceGroup} description={description}/>
+    <Card.Content extra>
+      {needDate}<br/>
+      {needStart} - {needEnd}
+    </Card.Content>
   </Card>
 
 const AdminCards = ({cols}) =>
-  <Card.Group itemsPerRow={cols}>
-    <AdminCard />
-  </Card.Group>
+  <Query query={QUERY_ACTIVE_PROJECTS}>
+    {({ data: { activeProjects } }) =>
+      <ResponsiveSwitcher
+        mobile={<Card.Group itemsPerRow={1}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
+        tablet={<Card.Group itemsPerRow={2}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
+        computer={<Card.Group itemsPerRow={3}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
+        />
+    }
+  </Query>
 
 const AdminContent = () =>
   <div>
@@ -92,23 +105,22 @@ const AdminPageMobile = () =>
 const AdminPageLarge = () =>
   <LeftMenuLayout left={<AdminMenu />} right={<AdminContent />} />
 
-const AdminPageResponsive = () =>
-  <div style={{height: '100%'}}>
-    <AdminHelmet />
-    <ResponsiveSwitcher
-      mobile={<AdminPageMobile />}
-      tablet={<AdminPageLarge />}
-      computer={<AdminPageLarge />}
-      />
-  </div>
-
 class AdminRoute extends Component {
   static async getInitialProps({ req, res, match, history, location, ...ctx }) {
     return { whatever: 'stuff', customThing: ctx.customThing };
   }
 
   render() {
-    return <AdminPageResponsive />
+    return (
+      <div style={{height: '100%'}}>
+        <AdminHelmet />
+        <ResponsiveSwitcher
+          mobile={<AdminPageMobile />}
+          tablet={<AdminPageLarge />}
+          computer={<AdminPageLarge />}
+          />
+      </div>      
+    )
   }
 }
 
