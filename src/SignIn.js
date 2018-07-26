@@ -8,8 +8,10 @@ import {
   Grid,
   Header,
   Segment,
+  Message,
 } from 'semantic-ui-react';
-
+import { Formik } from 'formik'
+import { string, object } from 'yup'
 
 const MUTATION_SIGNIN_USER = gql`
   mutation signinUser($email: String!, $password: String!) {
@@ -29,25 +31,46 @@ const SigninPanel = ({children}) =>
     </Grid.Column>
   </Grid>
 
+const schema = object().shape({
+  email: string().email('Enter a valid email.').required('Enter an email.'),
+  password: string().min(3, 'Enter a password of at least 3 characters.').required('Enter a password.')
+})
+
 const _SigninPage = ({history}) =>
   <Mutation mutation={MUTATION_SIGNIN_USER}>
     {signinUser =>
       <SigninPanel>
-        <Form>
-          <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
-          <Form.Input fluid icon='lock' iconPosition='left' placeholder='Password' type='password' />
-          <Button color='green' fluid size='large' onClick={e => {
-            e.preventDefault()
-            signinUser({variables: {email: 'sdebaun74@gmail.com', password: 'sdebaun'}})
+        <Formik
+          initialValues={{email: '', password: ''}}
+          validationSchema={schema}
+          onSubmit={(values, {setSubmitting, setErrors}) => {
+            signinUser({variables: values})
               .then(({data: {signinUser: result}}) => {
-                if (result) { history.push('/admin') }
-                else { console.log('sign in failed')}
+                if (result) {
+                  setSubmitting(false)
+                  history.push('/admin')
+                }
+                else {
+                  setSubmitting(false)
+                  setErrors({failure: 'I can\'t find anyone with that email and password.'})
+                }
               })
           }}>
-            sign in
-          </Button>
-          <Button fluid size='large'>back</Button>
-        </Form>
+          {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) =>
+            <Form>
+              {errors.failure && <Message>{errors.failure}</Message>}
+              {!errors.failure && <Message>Sign in to administer HALP.</Message>}
+              <Form.Input name='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' type='email' onChange={handleChange} onBlur={handleBlur} value={values.email}/>
+              {touched.email && errors.email && <Message>{errors.email}</Message>}
+              <Form.Input name='password' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' onChange={handleChange} onBlur={handleBlur} value={values.password} />
+              {touched.password && errors.password && <Message>{errors.password}</Message>}
+              <Button color='green' fluid size='large' type='submit' disabled={isSubmitting} onClick={handleSubmit}>
+                sign in
+              </Button>
+              <Button fluid size='large'>back</Button>
+            </Form>
+          }
+        </Formik>
       </SigninPanel>
     }
   </Mutation>
