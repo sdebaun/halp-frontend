@@ -120,14 +120,14 @@ const resolvers = {
     },
     activeProjects: (obj, args, context, info) => {
       const { projects } = context.cache.readQuery({ query: QUERY_ALL_PROJECTS })
-      console.log('found projects', projects)
+      // console.log('found projects', projects)
       return projects.filter(p => p.state === PROJECT_STATE_ACTIVE)
     },
     getProject: (obj, {id}, context, info) => {
       const { projects } = context.cache.readQuery({ query: QUERY_ALL_PROJECTS })
-      console.log('looking for', id, 'in', projects)
+      // console.log('looking for', id, 'in', projects)
       const found = projects.find(p => p.id === id)
-      console.log('found', found)
+      // console.log('found', found)
       return found
     },
   },
@@ -136,10 +136,10 @@ const resolvers = {
       const { users } = context.cache.readQuery({
         query: QUERY_ALL_USERS
       })
-      console.log('users', users)
-      console.log('signin with', email, password)
+      // console.log('users', users)
+      // console.log('signin with', email, password)
       const currentUser = users.find(u => ((u.email===email) && (u.password === password)))
-      console.log('currentUser', currentUser)
+      // console.log('currentUser', currentUser)
       return currentUser ? true : false
     }
   }

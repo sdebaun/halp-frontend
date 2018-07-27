@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
-  Header,
-  Button,
   Card,
-  Menu,
-  Icon,
-  Label,
 } from 'semantic-ui-react';
-import { Helmet } from 'react-helmet';
-import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher, cardsFrom } from '../layouts';
+import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
 import { QUERY_ACTIVE_PROJECTS } from '../Home/HomeCards'
 import { Query } from 'react-apollo'

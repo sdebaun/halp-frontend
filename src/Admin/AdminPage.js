@@ -17,8 +17,6 @@ import AdminCards from './AdminCards';
 import AdminProject from './AdminProject';
 import AdminAddProject from './AdminAddProject';
 
-import { QUERY_GET_PROJECT } from './AdminProject';
-
 export const QUERY_PROJECT_COUNTS = gql`
   query projectCounts {
     projectCounts @client
@@ -85,31 +83,6 @@ const AdminMenu = () =>
       <ButtonSignOut />
     </Menu.Item>
   </Menu>
-
-// const AdminMenu = () =>
-//   <Menu inverted vertical fluid>
-//     <Menu.Item header>
-//       <Header as="h1" size="huge" textAlign="center" inverted color="grey">
-//         HALP
-//       </Header>
-//     </Menu.Item>
-//     <Menu.Item>
-//       <ButtonCreateProject />
-//     </Menu.Item>
-//     <Query query={QUERY_PROJECT_COUNTS}>
-//       {({loading, data: { projectCounts }}) => {
-//         if (loading) { return <div>LOADING...</div> }
-//         return <div>
-//           <MenuItemLabelled label='active' color='green' count={projectCounts.active} />
-//           <MenuItemLabelled label='closed' color='grey' count={projectCounts.closed} />
-//           <MenuItemLabelled label='old' color='grey' count={projectCounts.old} />
-//         </div>
-//       }}
-//     </Query>
-//     <Menu.Item>
-//       <ButtonSignOut />
-//     </Menu.Item>
-//   </Menu>
 
 const AdminAppBar = ({toggle}) =>
   <Menu fixed='top' inverted>

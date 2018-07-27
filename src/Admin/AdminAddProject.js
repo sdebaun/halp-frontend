@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Card,
-  Grid,
   Header,
-  Button,
   Icon,
 } from 'semantic-ui-react';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
-import { ResponsiveSwitcher, cardsFrom } from '../layouts';
+// import { Query } from 'react-apollo';
 
 export const QUERY_SHOW_PROJECT = gql`
   query ShowProject {

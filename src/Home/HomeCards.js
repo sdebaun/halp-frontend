@@ -34,7 +34,7 @@ const HomeCards = () =>
   <Query query={QUERY_ACTIVE_PROJECTS}>
     {({ loading, data: { activeProjects } }) => {
       if (loading) { return <div>LOADING...</div> }
-      console.log('ap', activeProjects)
+      // console.log('ap', activeProjects)
       return <ResponsiveSwitcher
         mobile={<Card.Group itemsPerRow={1}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
         tablet={<Card.Group itemsPerRow={2}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
