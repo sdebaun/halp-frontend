@@ -25,13 +25,14 @@ const AdminCard = ({item: {id, sourceGroup, title, description, needDate, needSt
 
 const AdminCards = ({cols}) =>
   <Query query={QUERY_ACTIVE_PROJECTS}>
-    {({ data: { activeProjects } }) =>
-      <ResponsiveSwitcher
+    {({ loading, data: { activeProjects } }) => {
+      if (loading) { return <div>LOADING...</div> }
+      return <ResponsiveSwitcher
         mobile={<Card.Group itemsPerRow={1}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
         tablet={<Card.Group itemsPerRow={2}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
         computer={<Card.Group itemsPerRow={3}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
         />
-    }
+    }}
   </Query>
 
 export default AdminCards

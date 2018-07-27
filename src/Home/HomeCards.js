@@ -8,7 +8,7 @@ import { Query } from 'react-apollo';
 import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
 export const QUERY_ACTIVE_PROJECTS = gql`
-  query ActiveProjects {
+  query activeProjects {
     activeProjects @client {
       id
       title
@@ -32,13 +32,15 @@ const HomeCard = ({item: {id, sourceGroup, title, description, needDate, needSta
 
 const HomeCards = () =>
   <Query query={QUERY_ACTIVE_PROJECTS}>
-    {({ data: { activeProjects } }) =>
-      <ResponsiveSwitcher
+    {({ loading, data: { activeProjects } }) => {
+      if (loading) { return <div>LOADING...</div> }
+      console.log('ap', activeProjects)
+      return <ResponsiveSwitcher
         mobile={<Card.Group itemsPerRow={1}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
         tablet={<Card.Group itemsPerRow={2}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
         computer={<Card.Group itemsPerRow={3}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
         />
-    }
+    }}
   </Query>
 
 export default HomeCards

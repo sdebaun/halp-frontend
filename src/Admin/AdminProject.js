@@ -6,11 +6,11 @@ import {
   Icon,
 } from 'semantic-ui-react';
 import gql from 'graphql-tag';
-// import { Query } from 'react-apollo';
+import { Query } from 'react-apollo';
 
-export const QUERY_SHOW_PROJECT = gql`
-  query ShowProject {
-    activeProjects @client {
+export const QUERY_GET_PROJECT = gql`
+  query getProject($id: Number!) {
+    getProject(id: $id) @client {
       id
       title
       sourceGroup
@@ -18,6 +18,7 @@ export const QUERY_SHOW_PROJECT = gql`
       needDate
       needStart
       needEnd
+      state
     }
   }
 `
@@ -25,19 +26,24 @@ export const QUERY_SHOW_PROJECT = gql`
 // const HomeCard = ({item: {id, sourceGroup, title, description, needDate, needStart, needEnd}}) =>
 
 const AdminProject = ({id}) =>
-  <Grid stackable columns={2}>
-    <Grid.Column>
-      <Link to='/admin'>
-      <Header as='h2'>
-        <Icon name='angle left' />
-        Project: Name #{id}
-      </Header>
-      </Link>
-    </Grid.Column>
-    <Grid.Column>
-      More Content
-    </Grid.Column>
-  </Grid>
+  <Query query={QUERY_GET_PROJECT} variables={{id}}>
+    {({ loading, data: { getProject } }) => {
+      if (loading) { return <div>LOADING...</div> }
+      return <Grid stackable columns={2}>
+        <Grid.Column>
+          <Link to='/admin'>
+          <Header as='h2'>
+            <Icon name='angle left' />
+            {getProject.title}
+          </Header>
+          </Link>
+        </Grid.Column>
+        <Grid.Column>
+          More Content
+        </Grid.Column>
+      </Grid>
+    }}
+  </Query>
 
 // const HomeProject = () =>
 //   <Query query={QUERY_ACTIVE_PROJECTS}>
