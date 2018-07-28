@@ -10,8 +10,8 @@ import {
   Segment,
   Message,
 } from 'semantic-ui-react';
-import { Formik } from 'formik'
-import { string, object } from 'yup'
+import { Formik } from 'formik';
+import { string, object } from 'yup';
 
 const MUTATION_SIGNIN_USER = gql`
   mutation signinUser($email: String!, $password: String!) {

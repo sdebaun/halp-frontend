@@ -8,11 +8,10 @@ import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 import { QUERY_ACTIVE_PROJECTS } from '../Home/HomeCards'
 import { Query } from 'react-apollo'
 
-const AdminCard = ({item: {id, sourceGroup, title, description, needDate, needStart, needEnd}}) =>
+const AdminCard = ({item: {id, sourceGroup, title, pitch, needStart, needEnd}}) =>
   <Card as={Link} to={`/admin/project/${id}`} fluid={true}>
-    <Card.Content header={title} meta={sourceGroup} description={description}/>
+    <Card.Content header={title} meta={sourceGroup} description={pitch}/>
     <Card.Content extra>
-      {needDate}<br/>
       {needStart} - {needEnd}
     </Card.Content>
   </Card>

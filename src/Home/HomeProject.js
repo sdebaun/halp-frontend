@@ -14,16 +14,13 @@ export const QUERY_GET_PROJECT = gql`
       id
       title
       sourceGroup
-      description
-      needDate
+      pitch
       needStart
       needEnd
       state
     }
   }
 `
-
-// const HomeCard = ({item: {id, sourceGroup, title, description, needDate, needStart, needEnd}}) =>
 
 const HomeProject = ({id}) =>
   <Query query={QUERY_GET_PROJECT} variables={{id}}>

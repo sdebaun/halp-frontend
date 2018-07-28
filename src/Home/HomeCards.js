@@ -13,19 +13,17 @@ export const QUERY_ACTIVE_PROJECTS = gql`
       id
       title
       sourceGroup
-      description
-      needDate
+      pitch
       needStart
       needEnd
     }
   }
 `
 
-const HomeCard = ({item: {id, sourceGroup, title, description, needDate, needStart, needEnd}}) =>
+const HomeCard = ({item: {id, sourceGroup, title, pitch, needStart, needEnd}}) =>
     <Card fluid={true} as={Link} to={`/help/${id}`}>
-      <Card.Content header={title} meta={sourceGroup} description={description}/>
+      <Card.Content header={title} meta={sourceGroup} description={pitch}/>
       <Card.Content extra>
-        {needDate}<br/>
         {needStart} - {needEnd}
       </Card.Content>
     </Card>

@@ -5,6 +5,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 // import { createHttpLink } from 'apollo-link-http';
 // import fetch from 'isomorphic-fetch';
+// import uuid from 'uuid/v1';
+const uuid = require('uuid/v1');
 
 export const PROJECT_STATE_ACTIVE = 'active'
 export const PROJECT_STATE_CLOSED = 'closed'
@@ -29,8 +31,7 @@ const defaults = {
       id: '1',
       sourceGroup: 'Temple Guardians',
       title: 'Defend the Temple',
-      description: 'Help defend the temple against invasion by evil space aliens that want to steal our pants.',
-      needDate: 'Sunday 30 Aug',
+      pitch: 'Help defend the temple against invasion by evil space aliens that want to steal our pants.',
       needStart: '10a',
       needEnd: '2p',
       state: PROJECT_STATE_ACTIVE
@@ -40,8 +41,7 @@ const defaults = {
       id: '2',
       sourceGroup: 'Medusa Madness',
       title: 'Building Medusa-Proof Bunkers',
-      description: 'Nobody wants to get caught out in the open when the Medusa comes around!',
-      needDate: 'Monday 31 Aug',
+      pitch: 'Nobody wants to get caught out in the open when the Medusa comes around!',
       needStart: '8a',
       needEnd: '12p',
       state: PROJECT_STATE_ACTIVE
@@ -51,8 +51,7 @@ const defaults = {
       id: '3',
       sourceGroup: 'Full Circle Tea House',
       title: 'Pour a Round of Tea or Two',
-      description: 'Come pour tea because that is so much fun you can\'t even believe it!',
-      needDate: 'Thursday 3 Sept',
+      pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
       needStart: '4p',
       needEnd: '8p',
       state: PROJECT_STATE_ACTIVE
@@ -62,8 +61,7 @@ const defaults = {
       id: '4',
       sourceGroup: 'Some Group',
       title: 'Closed Project',
-      description: 'Come pour tea because that is so much fun you can\'t even believe it!',
-      needDate: 'Thursday 3 Sept',
+      pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
       needStart: '4p',
       needEnd: '8p',
       state: PROJECT_STATE_CLOSED
@@ -73,8 +71,7 @@ const defaults = {
       id: '5',
       sourceGroup: 'Some Group',
       title: 'Old Project',
-      description: 'Come pour tea because that is so much fun you can\'t even believe it!',
-      needDate: 'Thursday 3 Sept',
+      pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
       needStart: '4p',
       needEnd: '8p',
       state: PROJECT_STATE_OLD
@@ -97,8 +94,7 @@ const QUERY_ALL_PROJECTS = gql`
       id
       sourceGroup
       title
-      description
-      needDate
+      pitch
       needStart
       needEnd
       state
@@ -141,6 +137,20 @@ const resolvers = {
       const currentUser = users.find(u => ((u.email===email) && (u.password === password)))
       // console.log('currentUser', currentUser)
       return currentUser ? true : false
+    },
+    createProject: (obj, vals, context, info) => {
+      const { projects } = context.cache.readQuery({ query: QUERY_ALL_PROJECTS })
+      const newProject = {
+        __typename: 'Project',
+        id: uuid(),
+        state: PROJECT_STATE_ACTIVE,
+        ...vals
+      }
+      context.cache.writeQuery({
+        query: QUERY_ALL_PROJECTS,
+        data: {projects: projects.concat([newProject])}
+      })
+      return newProject
     }
   }
 }

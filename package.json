@@ -9,6 +9,7 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.55",
     "@jaredpalmer/after": "latest",
     "apollo-cache-inmemory": "^1.2.6",
     "apollo-client": "^2.3.7",
@@ -29,6 +30,7 @@
     "react-router-dom": "^4.2.2",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.82.1",
+    "uuid": "^3.3.2",
     "yup": "^0.26.0"
   }
 }
