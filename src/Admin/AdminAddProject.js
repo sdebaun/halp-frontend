@@ -80,7 +80,7 @@ const contactOptions = [
 ]
 
 const _FormAddProject = ({history}) =>
-  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={['AllProjects', 'activeProjects']}>
+  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={['AllProjects', 'activeProjects', 'projectCounts']}>
     {createProject =>
       <Formik
       initialValues={{title: '', pitch: '', sourceGroup: '', needStart: '', needEnd: '', contactMethod: '', contactAddress: '', contactName: ''}}
