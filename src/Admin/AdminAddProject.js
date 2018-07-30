@@ -16,7 +16,7 @@ import { string, object } from 'yup';
 
 import { FieldInputText, FieldInputDateTime, FieldSelect } from '../fields'
 
-const MUTATION_CREATE_PROJECT = gql`
+export const MUTATION_CREATE_PROJECT = gql`
   mutation createProject(
     $title: String!,
     $pitch: String!,

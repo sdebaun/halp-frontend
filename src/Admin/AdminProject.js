@@ -4,9 +4,13 @@ import {
   Grid,
   Header,
   Icon,
+  Button,
+  Dropdown,
 } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+
+import AdminProjectMenu from './AdminProjectMenu';
 
 export const QUERY_GET_PROJECT = gql`
   query getProject($id: Number!) {
@@ -21,36 +25,41 @@ export const QUERY_GET_PROJECT = gql`
     }
   }
 `
+const TitleBar = ({project}) =>
+  <Grid columns={2} style={{overflow:'visible'}}>
+    <Grid.Column>
+      <Link to='/admin'>
+        <Header as='h2'>
+          <Icon name='angle left' />
+          {project.title}
+        </Header>
+      </Link>
+    </Grid.Column>
+    <Grid.Column style={{overflow:'visible'}}>
+      <AdminProjectMenu project={project} />
+    </Grid.Column>
+  </Grid>
 
 const AdminProject = ({id}) =>
   <Query query={QUERY_GET_PROJECT} variables={{id}}>
     {({ loading, data: { getProject } }) => {
       if (loading) { return <div>LOADING...</div> }
-      return <Grid stackable columns={2}>
-        <Grid.Column>
-          <Link to='/admin'>
-          <Header as='h2'>
-            <Icon name='angle left' />
-            {getProject.title}
-          </Header>
-          </Link>
-        </Grid.Column>
-        <Grid.Column>
-          More Content
-        </Grid.Column>
-      </Grid>
+      return (
+        <div>
+          <TitleBar project={getProject} />
+          <Grid stackable>
+            <Grid.Row columns={2}>
+              <Grid.Column>
+                Content A
+              </Grid.Column>
+              <Grid.Column>
+                Content B
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+      )
     }}
   </Query>
-
-// const HomeProject = () =>
-//   <Query query={QUERY_ACTIVE_PROJECTS}>
-//     {({ data: { activeProjects } }) =>
-//       <ResponsiveSwitcher
-//         mobile={<Card.Group itemsPerRow={1}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
-//         tablet={<Card.Group itemsPerRow={2}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
-//         computer={<Card.Group itemsPerRow={3}>{cardsFrom(HomeCard, activeProjects)}</Card.Group>}
-//         />
-//     }
-//   </Query>
 
 export default AdminProject

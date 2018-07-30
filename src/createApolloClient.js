@@ -151,6 +151,21 @@ const resolvers = {
         data: {projects: projects.concat([newProject])}
       })
       return newProject
+    },
+    deleteProject: (obj, {id}, context, info) => {
+      // console.log('deleting', id)
+      const { projects } = context.cache.readQuery({ query: QUERY_ALL_PROJECTS })
+      const foundIndex = projects.findIndex(o => o.id === id)
+      // console.log('found to delete', foundIndex)
+      projects.splice(foundIndex, 1)
+      if (foundIndex > -1) {
+        context.cache.writeQuery({
+          query: QUERY_ALL_PROJECTS,
+          data: { projects }
+        })
+        return foundIndex
+      }
+      return -1
     }
   }
 }
