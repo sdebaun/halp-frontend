@@ -4,8 +4,6 @@ import {
   Grid,
   Header,
   Icon,
-  Button,
-  Dropdown,
 } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';

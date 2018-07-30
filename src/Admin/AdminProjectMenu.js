@@ -1,15 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import {
-  Grid,
-  Header,
-  Icon,
-  Button,
   Dropdown,
 } from 'semantic-ui-react';
 import gql from 'graphql-tag';
-import { Query, Mutation } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 
 import { MUTATION_CREATE_PROJECT } from './AdminAddProject';
 
