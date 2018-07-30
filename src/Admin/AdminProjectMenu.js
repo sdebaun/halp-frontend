@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import {
   Dropdown,
 } from 'semantic-ui-react';
@@ -51,7 +51,7 @@ const DropdownItemCopy = withRouter(_DropdownItemCopy)
 const AdminProjectMenu = ({project}) =>
   <Dropdown icon='ellipsis vertical'>
     <Dropdown.Menu>
-      <Dropdown.Item icon='edit' text='edit' />
+      <Dropdown.Item as={Link} to={`/admin/project/${project.id}/edit`} icon='edit' text='edit' />
       <Dropdown.Item icon='close' text='close' />
       <DropdownItemCopy project={project}/>
       <DropdownItemDelete project={project}/>

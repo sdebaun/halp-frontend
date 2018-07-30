@@ -166,6 +166,20 @@ const resolvers = {
         return foundIndex
       }
       return -1
+    },
+    updateProject: (obj, vals, context, info) => {
+      const { projects } = context.cache.readQuery({ query: QUERY_ALL_PROJECTS })
+      const foundIndex = projects.findIndex(o => o.id === vals.id)
+      if (foundIndex > -1) {
+        const updatedProject = Object.assign(projects[foundIndex], vals)
+        projects[foundIndex] = updatedProject
+        context.cache.writeQuery({
+          query: QUERY_ALL_PROJECTS,
+          data: { projects }
+        })
+        return foundIndex
+      }
+      return -1
     }
   }
 }

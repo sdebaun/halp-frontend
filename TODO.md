@@ -1,5 +1,5 @@
 X create project form & mutation
-- edit project form & mutation
+X edit project form & mutation
 X copy project
 X delete project
 - project detail views for public and admin
