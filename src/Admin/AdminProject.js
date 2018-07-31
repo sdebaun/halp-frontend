@@ -7,9 +7,8 @@ import {
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
-import AdminProjectMenu from './AdminProjectMenu';
 import AdminProjectEdit from './AdminProjectEdit';
-import { PageTitle } from '../layouts';
+import AdminProjectDetail from './AdminProjectDetail';
 
 export const QUERY_GET_PROJECT = gql`
   query getProject($id: Number!) {
@@ -21,32 +20,12 @@ export const QUERY_GET_PROJECT = gql`
       needStart
       needEnd
       state
+      contactMethod
+      contactAddress
+      contactName
     }
   }
 `
-
-export const AdminProjectTitle = ({project, linkTo}) =>
-  <PageTitle
-    linkTo={linkTo}
-    left={<Icon name='angle left' />}
-    middle={project.title}
-    right={<AdminProjectMenu project={project} />}
-    />
-
-const AdminProjectDetail = ({project}) =>
-  <div>
-    <AdminProjectTitle project={project} linkTo='/admin' />
-    <Grid stackable>
-      <Grid.Row columns={2}>
-        <Grid.Column>
-          Content A
-        </Grid.Column>
-        <Grid.Column>
-          Content B
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
-  </div>
 
 const AdminProject = ({id}) =>
   <Query query={QUERY_GET_PROJECT} variables={{id}}>

@@ -42,12 +42,13 @@ export const LeftMenuLayout = ({left, right}) =>
     </Grid.Column>
   </Grid>
 
-export const DrawerMenuLayout = ({header, drawer, main}) =>
-  <Toggle initial={false}>
-    {({on, toggle}) =>
+export const _DrawerMenuLayout = ({history, header, drawer, main}) =>
+  <Toggle initial={false} onChange={val => console.log('new toggle', val)}>
+    {({on, toggle, set}) =>
       <Sidebar.Pushable>
-        <Sidebar as={Segment} inverted visible={on} onHide={toggle} animation='overlay' style={{height: '100%'}}>
-          {drawer}
+        <Sidebar as={Segment} inverted visible={on} onHide={() => set(false)} animation='overlay' style={{height: '100%'}}>
+          <span style={{color: 'white'}}>ON: {on ? 'ON' :'OFF'}</span>
+          {drawer({nav: link => { set(false); history.push(link) }})}
         </Sidebar>
         <Sidebar.Pusher style={{marginTop: '61px'}}>
             {header({toggle})}
@@ -56,6 +57,8 @@ export const DrawerMenuLayout = ({header, drawer, main}) =>
       </Sidebar.Pushable>
     }
   </Toggle>
+
+export const DrawerMenuLayout = withRouter(_DrawerMenuLayout)
 
 export const ResponsiveSwitcher = ({mobile, tablet, computer}) =>
   <div style={{height: '100%'}}>

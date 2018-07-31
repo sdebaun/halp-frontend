@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, withRouter } from 'react-router-dom';
 import {
   Header,
   Button,
@@ -28,15 +28,13 @@ const ButtonSignOut = () =>
     <Button fluid basic inverted>sign out</Button>
   </Link>
 
-const ButtonCreateProject = () =>
-  <Link to='/admin/add'>
-    <Button fluid primary size='huge'>
+const ButtonCreateProject = ({nav}) =>
+    <Button fluid primary size='huge' onClick={() => nav('/admin/add')}>
       + add project
     </Button>
-  </Link>
 
-const MenuItemLabelled = ({label, count, color}) =>
-  <Menu.Item name={label}>
+const MenuItemLabelled = ({nav, label, count, color}) =>
+  <Menu.Item name={label} onClick={nav}>
     <Label color={color}>{count}</Label>
     {label}
   </Menu.Item>
@@ -51,6 +49,12 @@ const AdminContent = () =>
     <Route path='/admin' exact render={() =>
       <AdminCards />
       } />
+    <Route path='/admin/closed' exact render={() =>
+      <AdminCards />
+      } />
+    <Route path='/admin/old' exact render={() =>
+      <AdminCards />
+      } />
     <Route path='/admin/add' exact render={() =>
       <AdminAddProject />
       } />
@@ -59,7 +63,7 @@ const AdminContent = () =>
       } />
   </div>
 
-const AdminMenu = () =>
+const AdminMenu = ({nav}) =>
   <Menu inverted vertical fluid>
     <Menu.Item header>
       <Header as="h1" size="huge" textAlign="center" inverted color="grey">
@@ -67,15 +71,15 @@ const AdminMenu = () =>
       </Header>
     </Menu.Item>
     <Menu.Item>
-      <ButtonCreateProject />
+      <ButtonCreateProject nav={nav}/>
     </Menu.Item>
     <Query query={QUERY_PROJECT_COUNTS}>
       {({loading, data: { projectCounts }}) => {
         if (loading) { return <div>LOADING...</div> }
         return <div>
-          <MenuItemLabelled label='active' color='green' count={projectCounts.active} />
-          <MenuItemLabelled label='closed' color='grey' count={projectCounts.closed} />
-          <MenuItemLabelled label='old' color='grey' count={projectCounts.old} />
+          <MenuItemLabelled nav={() => nav('/admin')} label='active' color='green' count={projectCounts.active} />
+          <MenuItemLabelled nav={() => nav('/admin/closed')} label='closed' color='grey' count={projectCounts.closed} />
+          <MenuItemLabelled nav={() => nav('/admin/old')} label='old' color='grey' count={projectCounts.old} />
         </div>
       }}
     </Query>
@@ -95,10 +99,12 @@ const AdminAppBar = ({toggle}) =>
   </Menu>
 
 const AdminPageMobile = () =>
-  <DrawerMenuLayout header={({toggle}) => <AdminAppBar toggle={toggle}/>} drawer={<AdminMenu />} main={<AdminContent />} />
+  <DrawerMenuLayout header={({toggle}) => <AdminAppBar toggle={toggle}/>} drawer={({nav}) => <AdminMenu nav={nav}/>} main={<AdminContent />} />
 
-const AdminPageLarge = () =>
-  <LeftMenuLayout left={<AdminMenu />} right={<AdminContent />} />
+const _AdminPageLarge = ({history}) =>
+  <LeftMenuLayout left={<AdminMenu nav={link => history.push(link)}/>} right={<AdminContent />} />
+
+  const AdminPageLarge = withRouter(_AdminPageLarge)
 
 class AdminPage extends Component {
   static async getInitialProps({ req, res, match, history, location, ...ctx }) {

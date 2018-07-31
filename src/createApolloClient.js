@@ -34,7 +34,10 @@ const defaults = {
       pitch: 'Help defend the temple against invasion by evil space aliens that want to steal our pants.',
       needStart: '10a',
       needEnd: '2p',
-      state: PROJECT_STATE_ACTIVE
+      state: PROJECT_STATE_ACTIVE,
+      contactMethod: 'SCHEDULE',
+      contactAddress: '4 & E',
+      contactName: 'Bob Dobbs',
     },
     {
       __typename: 'Project',
@@ -44,7 +47,10 @@ const defaults = {
       pitch: 'Nobody wants to get caught out in the open when the Medusa comes around!',
       needStart: '8a',
       needEnd: '12p',
-      state: PROJECT_STATE_ACTIVE
+      state: PROJECT_STATE_ACTIVE,
+      contactMethod: 'WALKUP',
+      contactAddress: '4 & E',
+      contactName: 'Bob Dobbs',
     },
     {
       __typename: 'Project',
@@ -54,7 +60,10 @@ const defaults = {
       pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
       needStart: '4p',
       needEnd: '8p',
-      state: PROJECT_STATE_ACTIVE
+      state: PROJECT_STATE_ACTIVE,
+      contactMethod: 'WALKUP',
+      contactAddress: '4 & E',
+      contactName: 'Bob Dobbs',
     },
     {
       __typename: 'Project',
@@ -64,7 +73,10 @@ const defaults = {
       pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
       needStart: '4p',
       needEnd: '8p',
-      state: PROJECT_STATE_CLOSED
+      state: PROJECT_STATE_CLOSED,
+      contactMethod: 'WALKUP',
+      contactAddress: '4 & E',
+      contactName: 'Bob Dobbs',
     },
     {
       __typename: 'Project',
@@ -74,7 +86,10 @@ const defaults = {
       pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
       needStart: '4p',
       needEnd: '8p',
-      state: PROJECT_STATE_OLD
+      state: PROJECT_STATE_OLD,
+      contactMethod: 'WALKUP',
+      contactAddress: '4 & E',
+      contactName: 'Bob Dobbs',
     },
   ]
 }

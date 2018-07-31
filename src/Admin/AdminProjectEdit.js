@@ -8,7 +8,7 @@ import {
 } from 'semantic-ui-react';
 
 import FormProject from './FormProject'
-import { AdminProjectTitle } from './AdminProject';
+import AdminProjectTitle from './AdminProjectTitle';
 
 export const MUTATION_UPDATE_PROJECT = gql`
   mutation updateProject(
