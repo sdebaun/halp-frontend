@@ -1,14 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import {
-  Header,
   Icon,
+  Grid,
 } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
-import FormProject from './FormProject'
+import FormProject from './FormProject';
+import { PageTitle } from '../layouts';
 
 export const MUTATION_CREATE_PROJECT = gql`
   mutation createProject(
@@ -33,15 +33,12 @@ export const MUTATION_CREATE_PROJECT = gql`
   }
 `
 
-const Title = () =>
-  <div>
-    <Link to='/admin'>
-      <Header as='h2'>
-        <Icon name='angle left' />
-        Add Project
-      </Header>
-    </Link>
-  </div>
+const Title = ({project}) =>
+  <PageTitle
+    linkTo='/admin'
+    left={<Icon name='angle left' />}
+    middle='Add Project'
+    />
 
 const PROJECT_INITIAL_VALUES = {
   title: '',
@@ -85,7 +82,9 @@ const FormProjectAdd = withRouter(_FormProjectAdd)
 const AdminAddProject = ({id}) =>
   <div>
     <Title />
+    <Grid><Grid.Column>
     <FormProjectAdd />
+    </Grid.Column></Grid>
   </div>
 
 export default AdminAddProject

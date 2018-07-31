@@ -13,14 +13,6 @@ html, body {
 }
 
 body {
-  margin: 0;
-  padding: 0;
-}
-
-.ui.grid {
-  height: 100%;
-}
-
-.ui.grid .column {
-  overflow-y: auto;  
+  /* margin: 0; */
+  /* padding: 0; */
 }

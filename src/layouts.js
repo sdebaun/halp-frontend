@@ -1,18 +1,41 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Grid,
   Sidebar,
   Segment,
   Responsive,
+  Header,
 } from 'semantic-ui-react';
 import { Toggle } from 'react-powerplug';
 
+export const PageTitle = ({linkTo, left, middle, right}) =>
+  <Grid verticalAlign='middle' style={{marginTop: 0, marginBottom: 0, backgroundColor:'#CCC'}}>
+    <Grid.Column width={13}>
+      <Link to={linkTo}>
+        <Grid verticalAlign='middle'>
+          <Grid.Column width={2}>
+            <Header as='h3'>{left}</Header>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Header as='h2'>
+              {middle}
+            </Header>
+          </Grid.Column>
+        </Grid>
+      </Link>
+    </Grid.Column>
+    <Grid.Column float='right' width={3} style={{overflowY: 'visible'}}>
+      {right}
+    </Grid.Column>
+  </Grid>
+
 export const LeftMenuLayout = ({left, right}) =>
-  <Grid>
-    <Grid.Column width={4} style={{backgroundColor: '#000', paddingLeft: '2.5rem'}}>
+  <Grid style={{height: '100%'}}>
+    <Grid.Column width={4} style={{height: '100%', backgroundColor: '#000', paddingLeft: '2.5rem'}}>
       {left}
     </Grid.Column>
-    <Grid.Column as={Segment} width={12}>
+    <Grid.Column width={12}>
       {right}
     </Grid.Column>
   </Grid>
@@ -21,10 +44,10 @@ export const DrawerMenuLayout = ({header, drawer, main}) =>
   <Toggle initial={false}>
     {({on, toggle}) =>
       <Sidebar.Pushable>
-        <Sidebar as={Segment} inverted visible={on} onHide={toggle} animation='overlay'>
+        <Sidebar as={Segment} inverted visible={on} onHide={toggle} animation='overlay' style={{height: '100%'}}>
           {drawer}
         </Sidebar>
-        <Sidebar.Pusher style={{marginTop: '5rem'}}>
+        <Sidebar.Pusher style={{marginTop: '61px'}}>
             {header({toggle})}
             {main}
         </Sidebar.Pusher>
