@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import {
   Dropdown,
+  Menu,
 } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
@@ -18,7 +19,6 @@ const _DropdownItemDelete = ({project, history}) =>
   <Mutation mutation={MUTATION_DELETE_PROJECT} refetchQueries={['AllProjects', 'activeProjects', 'projectCounts']}>
     {deleteProject => {
       const onClick = () => {
-        // console.log('deleting project', project)
         const variables = {
           id: project.id,
         }
@@ -33,7 +33,6 @@ const _DropdownItemCopy = ({project, history}) =>
   <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={['AllProjects', 'activeProjects', 'projectCounts']}>
     {createProject => {
       const onClick = () => {
-        // console.log('copying project', project)
         const variables = {
           ...project,
           title: `Copy of ${project.title}`,
@@ -49,13 +48,17 @@ const DropdownItemDelete = withRouter(_DropdownItemDelete)
 const DropdownItemCopy = withRouter(_DropdownItemCopy)
 
 const AdminProjectMenu = ({project}) =>
-  <Dropdown icon='ellipsis vertical'>
-    <Dropdown.Menu>
-      <Dropdown.Item as={Link} to={`/admin/project/${project.id}/edit`} icon='edit' text='edit' />
-      <Dropdown.Item icon='close' text='close' />
-      <DropdownItemCopy project={project}/>
-      <DropdownItemDelete project={project}/>
-    </Dropdown.Menu>
-  </Dropdown>
+  <Menu text style={{minHeight: 0, padding: 0, paddingRight: '12px', margin: 0}}>
+    <Menu.Menu position='right'>
+      <Dropdown icon='ellipsis vertical'>
+        <Dropdown.Menu>
+          <Dropdown.Item as={Link} to={`/admin/project/${project.id}/edit`} icon='edit' text='edit' />
+          <Dropdown.Item icon='close' text='close' />
+          <DropdownItemCopy project={project}/>
+          <DropdownItemDelete project={project}/>
+        </Dropdown.Menu>
+      </Dropdown>
+    </Menu.Menu>
+  </Menu>
 
 export default AdminProjectMenu;

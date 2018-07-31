@@ -3,8 +3,12 @@ import { withRouter } from 'react-router-dom';
 
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
+import {
+  Grid
+} from 'semantic-ui-react';
 
 import FormProject from './FormProject'
+import { AdminProjectTitle } from './AdminProject';
 
 export const MUTATION_UPDATE_PROJECT = gql`
   mutation updateProject(
@@ -60,6 +64,11 @@ const _FormProjectUpdate = ({history, project}) =>
 const FormProjectUpdate = withRouter(_FormProjectUpdate)
 
 const AdminProjectEdit = ({project}) =>
-  <FormProjectUpdate project={project}/>
+  <div>
+    <AdminProjectTitle project={project} />
+    <Grid><Grid.Column>
+    <FormProjectUpdate project={project}/>
+    </Grid.Column></Grid>
+  </div>
 
 export default AdminProjectEdit

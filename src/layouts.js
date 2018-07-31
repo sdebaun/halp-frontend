@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import {
   Grid,
   Sidebar,
@@ -9,26 +9,28 @@ import {
 } from 'semantic-ui-react';
 import { Toggle } from 'react-powerplug';
 
-export const PageTitle = ({linkTo, left, middle, right}) =>
-  <Grid verticalAlign='middle' style={{marginTop: 0, marginBottom: 0, backgroundColor:'#CCC'}}>
+export const _PageTitle = ({history, linkTo, left, middle, right}) =>
+  <Grid verticalAlign='middle' style={{marginTop: 0, marginBottom: 0, backgroundColor:'#DDD'}}>
     <Grid.Column width={13}>
-      <Link to={linkTo}>
+      <a onClick={() => linkTo ? history.push(linkTo) : history.goBack()}>
         <Grid verticalAlign='middle'>
           <Grid.Column width={2}>
             <Header as='h3'>{left}</Header>
           </Grid.Column>
-          <Grid.Column width={10}>
+          <Grid.Column width={12}>
             <Header as='h2'>
               {middle}
             </Header>
           </Grid.Column>
         </Grid>
-      </Link>
+      </a>
     </Grid.Column>
-    <Grid.Column float='right' width={3} style={{overflowY: 'visible'}}>
-      {right}
+    <Grid.Column width={3} style={{overflowY: 'visible'}}>
+      <Header as='h2'>{right}</Header>
     </Grid.Column>
   </Grid>
+
+export const PageTitle = withRouter(_PageTitle)
 
 export const LeftMenuLayout = ({left, right}) =>
   <Grid style={{height: '100%'}}>

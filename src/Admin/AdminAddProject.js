@@ -35,7 +35,7 @@ export const MUTATION_CREATE_PROJECT = gql`
 
 const Title = ({project}) =>
   <PageTitle
-    linkTo='/admin'
+    // linkTo='/admin'
     left={<Icon name='angle left' />}
     middle='Add Project'
     />
