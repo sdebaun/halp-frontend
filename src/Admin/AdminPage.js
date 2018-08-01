@@ -6,7 +6,7 @@ import {
   Menu,
   Icon,
   Label,
-} from 'semantic-ui-react';
+} from '../ui';
 import { Helmet } from 'react-helmet';
 import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher } from '../layouts';
 

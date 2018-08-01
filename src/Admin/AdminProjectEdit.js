@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import {
-  Grid
-} from 'semantic-ui-react';
+  Panel
+} from '../ui';
 
 import FormProject from './FormProject'
 import AdminProjectTitle from './AdminProjectTitle';
@@ -66,9 +66,9 @@ const FormProjectUpdate = withRouter(_FormProjectUpdate)
 const AdminProjectEdit = ({project}) =>
   <div>
     <AdminProjectTitle project={project} />
-    <Grid><Grid.Column>
+    <Panel>
     <FormProjectUpdate project={project}/>
-    </Grid.Column></Grid>
+    </Panel>
   </div>
 
 export default AdminProjectEdit

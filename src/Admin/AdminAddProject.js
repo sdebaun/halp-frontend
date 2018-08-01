@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import {
   Icon,
-  Grid,
-} from 'semantic-ui-react';
+  Panel,
+} from '../ui';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
@@ -82,9 +82,9 @@ const FormProjectAdd = withRouter(_FormProjectAdd)
 const AdminAddProject = ({id}) =>
   <div>
     <Title />
-    <Grid><Grid.Column>
+    <Panel>
     <FormProjectAdd />
-    </Grid.Column></Grid>
+    </Panel>
   </div>
 
 export default AdminAddProject

@@ -1,9 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import {
-  Grid,
-  Icon,
-} from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 

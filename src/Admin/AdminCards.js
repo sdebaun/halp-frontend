@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Card,
-} from 'semantic-ui-react';
+  CardGroup
+} from '../ui';
 import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
 import { QUERY_ACTIVE_PROJECTS } from '../Home/HomeCards'
@@ -23,9 +24,9 @@ const AdminCards = ({cols}) =>
     {({ loading, data: { activeProjects } }) => {
       if (loading) { return <div>LOADING...</div> }
       return <ResponsiveSwitcher
-        mobile={<Card.Group itemsPerRow={1}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
-        tablet={<Card.Group itemsPerRow={2}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
-        computer={<Card.Group itemsPerRow={3}>{cardsFrom(AdminCard, activeProjects)}</Card.Group>}
+        mobile={<CardGroup itemsPerRow={1}>{cardsFrom(AdminCard, activeProjects)}</CardGroup>}
+        tablet={<CardGroup itemsPerRow={2}>{cardsFrom(AdminCard, activeProjects)}</CardGroup>}
+        computer={<CardGroup itemsPerRow={3}>{cardsFrom(AdminCard, activeProjects)}</CardGroup>}
         />
     }}
   </Query>

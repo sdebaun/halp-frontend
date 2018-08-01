@@ -12,11 +12,6 @@ import {
 
 import AdminProjectTitle from './AdminProjectTitle';
 
-const DELIVERY_METHOD_LABEL = {
-  SCHEDULE: 'Schedule a Shift With',
-  WALKUP: 'Walk up when needed'
-}
-
 const isSameDay = (a, b) =>
   moment(a).startOf('day').isSame(moment(b).startOf('day'))
 
@@ -89,7 +84,7 @@ export const DeliveryContact = ({contactName, contactAddress}) =>
 
 export const DeliveryInfo = ({contactMethod, contactName, contactAddress}) =>
   <Segment basic>
-    { contactMethod=='SCHEDULE' ? <DeliverySchedule /> : <DeliveryWalkup />}
+    { contactMethod==='SCHEDULE' ? <DeliverySchedule /> : <DeliveryWalkup />}
     <DeliveryContact contactName={contactName} contactAddress={contactAddress}/>
   </Segment>
 
