@@ -2,7 +2,8 @@ X create project form & mutation
 X edit project form & mutation
 X copy project
 X delete project
-- project detail views for public and admin
+- project detail views for public
+- project detail views for admin
 - add/confirm/delete sentPersons
 - add/delete details
 - link menu project counts to views of those states

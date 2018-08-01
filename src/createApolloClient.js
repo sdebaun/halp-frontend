@@ -32,8 +32,8 @@ const defaults = {
       sourceGroup: 'Temple Guardians',
       title: 'Defend the Temple',
       pitch: 'Help defend the temple against invasion by evil space aliens that want to steal our pants.',
-      needStart: '10a',
-      needEnd: '2p',
+      needStart: '1974-10-25T10:00',
+      needEnd: '1974-10-25T16:00',
       state: PROJECT_STATE_ACTIVE,
       contactMethod: 'SCHEDULE',
       contactAddress: '4 & E',
@@ -45,8 +45,8 @@ const defaults = {
       sourceGroup: 'Medusa Madness',
       title: 'Building Medusa-Proof Bunkers',
       pitch: 'Nobody wants to get caught out in the open when the Medusa comes around!',
-      needStart: '8a',
-      needEnd: '12p',
+      needStart: '1974-10-25T10:00',
+      needEnd: '1974-10-26T16:00',
       state: PROJECT_STATE_ACTIVE,
       contactMethod: 'WALKUP',
       contactAddress: '4 & E',
@@ -58,8 +58,8 @@ const defaults = {
       sourceGroup: 'Full Circle Tea House',
       title: 'Pour a Round of Tea or Two',
       pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
-      needStart: '4p',
-      needEnd: '8p',
+      needStart: '1974-10-25T10:00',
+      needEnd: '1974-10-26T16:00',
       state: PROJECT_STATE_ACTIVE,
       contactMethod: 'WALKUP',
       contactAddress: '4 & E',
@@ -71,8 +71,8 @@ const defaults = {
       sourceGroup: 'Some Group',
       title: 'Closed Project',
       pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
-      needStart: '4p',
-      needEnd: '8p',
+      needStart: '1974-10-25T10:00',
+      needEnd: '1974-10-26T16:00',
       state: PROJECT_STATE_CLOSED,
       contactMethod: 'WALKUP',
       contactAddress: '4 & E',
@@ -84,8 +84,8 @@ const defaults = {
       sourceGroup: 'Some Group',
       title: 'Old Project',
       pitch: 'Come pour tea because that is so much fun you can\'t even believe it!',
-      needStart: '4p',
-      needEnd: '8p',
+      needStart: '1974-10-25T10:00',
+      needEnd: '1974-10-26T16:00',
       state: PROJECT_STATE_OLD,
       contactMethod: 'WALKUP',
       contactAddress: '4 & E',
@@ -113,6 +113,9 @@ const QUERY_ALL_PROJECTS = gql`
       needStart
       needEnd
       state
+      contactMethod
+      contactAddress
+      contactName
     }
   }
 `

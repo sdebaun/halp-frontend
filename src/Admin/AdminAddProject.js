@@ -28,6 +28,7 @@ export const MUTATION_CREATE_PROJECT = gql`
       needStart: $needStart,
       needEnd: $needEnd,
       contactMethod: $contactMethod,
+      contactAddress: $contactAddress,
       contactName: $contactName,
     ) @client
   }
@@ -43,8 +44,8 @@ const PROJECT_INITIAL_VALUES = {
   title: '',
   pitch: '',
   sourceGroup: '',
-  needStart: '',
-  needEnd: '',
+  needStart: '10/25/1974 10:00 AM',
+  needEnd: '10/25/1974 4:00 PM',
   contactMethod: '',
   contactAddress: '',
   contactName: '',

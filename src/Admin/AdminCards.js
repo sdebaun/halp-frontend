@@ -7,12 +7,14 @@ import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
 import { QUERY_ACTIVE_PROJECTS } from '../Home/HomeCards'
 import { Query } from 'react-apollo'
+import { PeopleStats, TimeRange } from './AdminProjectDetail';
 
 const AdminCard = ({item: {id, sourceGroup, title, pitch, needStart, needEnd}}) =>
   <Card as={Link} to={`/admin/project/${id}`} fluid={true}>
     <Card.Content header={title} meta={sourceGroup} description={pitch}/>
-    <Card.Content extra>
-      {needStart} - {needEnd}
+    <Card.Content>
+      <TimeRange needStart={needStart} needEnd={needEnd} />
+      <PeopleStats peopleNeeded={10} peopleSent={4} peopleConfirmed={2} />
     </Card.Content>
   </Card>
 
