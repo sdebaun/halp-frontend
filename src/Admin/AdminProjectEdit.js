@@ -9,10 +9,10 @@ import {
 
 import FormProject from './FormProject'
 import AdminProjectTitle from './AdminProjectTitle';
-import { MUTATION_UPDATE_PROJECT, refetchQueries } from '../api/projects';
+import { MUTATION_UPDATE_PROJECT, refetchSpecific } from '../api/projects';
 
 const _FormProjectUpdate = ({history, project}) =>
-  <Mutation mutation={MUTATION_UPDATE_PROJECT} refetchQueries={refetchQueries}>
+  <Mutation mutation={MUTATION_UPDATE_PROJECT} refetchQueries={refetchSpecific(project.id)}>
     {updateProject =>
       <FormProject
         initialValues={project}

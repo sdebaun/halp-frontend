@@ -7,10 +7,10 @@ import {
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
-import { MUTATION_CREATE_PROJECT, MUTATION_DELETE_PROJECT, refetchQueries } from '../api/projects';
+import { MUTATION_COPY_PROJECT, MUTATION_DELETE_PROJECT, refetchAll } from '../api/projects';
 
 const _DropdownItemDelete = ({project, history}) =>
-  <Mutation mutation={MUTATION_DELETE_PROJECT} refetchQueries={refetchQueries}>
+  <Mutation mutation={MUTATION_DELETE_PROJECT} refetchQueries={refetchAll}>
     {deleteProject => {
       const onClick = () => {
         const variables = {
@@ -24,15 +24,14 @@ const _DropdownItemDelete = ({project, history}) =>
   </Mutation>
 
 const _DropdownItemCopy = ({project, history}) =>
-  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={refetchQueries}>
-    {createProject => {
+  <Mutation mutation={MUTATION_COPY_PROJECT} refetchQueries={refetchAll}>
+    {copyProject => {
       const onClick = () => {
         const variables = {
-          ...project,
-          title: `Copy of ${project.title}`,
+          id: project.id
         }
-        createProject({variables})
-          .then(({data: {createProject: result}}) => {history.push(`/admin/project/${result.id}`)})
+        copyProject({variables})
+          .then(({data: {copyProject: result}}) => {history.push(`/admin/project/${result.id}`)})
       }
       return <Dropdown.Item icon='copy' text='copy' onClick={onClick}/>
     }}

@@ -1,9 +1,22 @@
 import gql from 'graphql-tag';
 
-export const refetchQueries = [
+export const refetchAll = [
   'projectsActive',
   'projectCounts',
   'getProject'
+]
+
+export const refetchSpecific = (id) => [
+  {
+    query: QUERY_ACTIVE_PROJECTS,
+  },
+  {
+    query: QUERY_PROJECT_COUNTS,
+  },
+  {
+    query: QUERY_GET_PROJECT,
+    variables: { id }
+  }
 ]
 
 export const QUERY_ACTIVE_PROJECTS = gql`
@@ -91,6 +104,18 @@ export const MUTATION_CREATE_PROJECT = gql`
       sentPersonsNeeded: $sentPersonsNeeded,
     ) {
       id
+    }
+  }
+`
+
+export const MUTATION_COPY_PROJECT = gql`
+  mutation copyProject(
+    $id: String!
+  ) {
+    copyProject(
+      id: $id
+    ) {
+      id # the new id
     }
   }
 `

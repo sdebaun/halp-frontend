@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import Moment from 'react-moment';
 import { Mutation } from 'react-apollo';
-import { MUTATION_ADD_PROJECT_DETAIL, MUTATION_DELETE_PROJECT_DETAIL, refetchQueries } from '../api/projects';
+import { MUTATION_ADD_PROJECT_DETAIL, MUTATION_DELETE_PROJECT_DETAIL, refetchAll, refetchSpecific } from '../api/projects';
 
 import {
   Grid,
@@ -95,27 +95,25 @@ export const DeliveryInfo = ({contactMethod, contactName, contactAddress}) =>
     <DeliveryContact contactName={contactName} contactAddress={contactAddress}/>
   </Segment>
 
-export const DetailItem = ({detail: {id, text}}) =>
+export const DetailItem = ({projectId, detail: {id, text}}) =>
   <List.Item>
     <List.Content floated='right'>
       <Button icon='edit' />
-      <ButtonDeleteDetail id={id} />
+      <ButtonDeleteDetail id={id} projectId={projectId}/>
     </List.Content>
     <Icon name='checkmark'/>
     <List.Content>{text}</List.Content>
   </List.Item>
 
-
-
-export const ButtonDeleteDetail = ({id}) =>
-<Mutation mutation={MUTATION_DELETE_PROJECT_DETAIL} refetchQueries={refetchQueries}>
+export const ButtonDeleteDetail = ({projectId, id}) =>
+<Mutation mutation={MUTATION_DELETE_PROJECT_DETAIL} refetchQueries={refetchSpecific(projectId)}>
   {deleteProjectDetail =>
     <Button icon='trash' onClick={() => deleteProjectDetail({variables: {id}})} />
   }
 </Mutation>
 
 export const DetailAdd = ({id}) =>
-  <Mutation mutation={MUTATION_ADD_PROJECT_DETAIL} refetchQueries={refetchQueries}>
+  <Mutation mutation={MUTATION_ADD_PROJECT_DETAIL} refetchQueries={refetchSpecific(id)}>
     {addProjectDetail => 
       <FormDetail
         initialValues={{text: ''}}
@@ -145,7 +143,7 @@ export const Details = ({id, details}) =>
   <div>
     <h3>What are they looking for?</h3>
     <List divided verticalAlign='middle' size='large'>
-      { details.map(d => <DetailItem key={d.id} detail={d} />) }
+      { details.map(d => <DetailItem key={d.id} projectId={id} detail={d} />) }
       <List.Item>
         <DetailAdd id={id} />
       </List.Item>

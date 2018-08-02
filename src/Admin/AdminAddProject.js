@@ -9,7 +9,7 @@ import { Mutation } from 'react-apollo';
 
 import FormProject from './FormProject';
 import { PageTitle } from '../layouts';
-import { MUTATION_CREATE_PROJECT, refetchQueries } from '../api/projects'
+import { MUTATION_CREATE_PROJECT, refetchAll } from '../api/projects'
 
 const Title = ({project}) =>
   <PageTitle
@@ -30,7 +30,7 @@ const PROJECT_INITIAL_VALUES = {
 }
 
 const _FormProjectAdd = ({history}) =>
-  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={refetchQueries}>
+  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={refetchAll}>
     {createProject =>
       <FormProject
         initialValues={PROJECT_INITIAL_VALUES}
