@@ -7,16 +7,10 @@ import {
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
-import { MUTATION_CREATE_PROJECT } from './AdminAddProject';
-
-const MUTATION_DELETE_PROJECT = gql`
-  mutation deleteProject($id: String!) {
-    deleteProject(id: $id) @client
-  }
-`
+import { MUTATION_CREATE_PROJECT, MUTATION_DELETE_PROJECT, refetchQueries } from '../api/projects';
 
 const _DropdownItemDelete = ({project, history}) =>
-  <Mutation mutation={MUTATION_DELETE_PROJECT} refetchQueries={['AllProjects', 'activeProjects', 'projectCounts']}>
+  <Mutation mutation={MUTATION_DELETE_PROJECT} refetchQueries={refetchQueries}>
     {deleteProject => {
       const onClick = () => {
         const variables = {
@@ -30,7 +24,7 @@ const _DropdownItemDelete = ({project, history}) =>
   </Mutation>
 
 const _DropdownItemCopy = ({project, history}) =>
-  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={['AllProjects', 'activeProjects', 'projectCounts']}>
+  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={refetchQueries}>
     {createProject => {
       const onClick = () => {
         const variables = {

@@ -3,8 +3,8 @@ import { ApolloLink } from 'apollo-client-preset';
 import gql from 'graphql-tag';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
-// import { createHttpLink } from 'apollo-link-http';
-// import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
+import { createHttpLink } from 'apollo-link-http';
 // import uuid from 'uuid/v1';
 const uuid = require('uuid/v1');
 
@@ -207,13 +207,15 @@ function createApolloClient({ ssrMode }) {
     ? new InMemoryCache()
     : new InMemoryCache().restore(window.__APOLLO_STATE__)
 
+  const httpLink = createHttpLink({ uri: 'http://localhost:4000/graphql '})
+
   const stateLink = withClientState({
     cache,
     defaults,
     resolvers,
   })
 
-  const link = ApolloLink.from([stateLink])
+  const link = ApolloLink.from([stateLink, httpLink])
 
   return new ApolloClient({
     ssrMode,

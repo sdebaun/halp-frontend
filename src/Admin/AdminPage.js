@@ -16,12 +16,7 @@ import { Query } from 'react-apollo';
 import AdminCards from './AdminCards';
 import AdminProject from './AdminProject';
 import AdminAddProject from './AdminAddProject';
-
-export const QUERY_PROJECT_COUNTS = gql`
-  query projectCounts {
-    projectCounts @client
-  }
-`
+import { QUERY_PROJECT_COUNTS } from '../api/projects';
 
 const ButtonSignOut = () =>
   <Link to='/'>

@@ -9,34 +9,10 @@ import {
 
 import FormProject from './FormProject'
 import AdminProjectTitle from './AdminProjectTitle';
-
-export const MUTATION_UPDATE_PROJECT = gql`
-  mutation updateProject(
-    $id: String!
-    $title: String!,
-    $pitch: String!,
-    $sourceGroup: String,
-    $needStart: String,
-    $needEnd: String,
-    $contactMethod: String,
-    $contactAddress: String,
-    $contactName: String,
-    ) {
-    updateProject(
-      id: $id
-      title: $title,
-      pitch: $pitch,
-      sourceGroup: $sourceGroup,
-      needStart: $needStart,
-      needEnd: $needEnd,
-      contactMethod: $contactMethod,
-      contactName: $contactName,
-    ) @client
-  }
-`
+import { MUTATION_UPDATE_PROJECT, refetchQueries } from '../api/projects';
 
 const _FormProjectUpdate = ({history, project}) =>
-  <Mutation mutation={MUTATION_UPDATE_PROJECT} refetchQueries={['AllProjects', 'activeProjects', 'projectCounts']}>
+  <Mutation mutation={MUTATION_UPDATE_PROJECT} refetchQueries={refetchQueries}>
     {updateProject =>
       <FormProject
         initialValues={project}

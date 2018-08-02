@@ -7,20 +7,7 @@ import {
 } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-
-export const QUERY_GET_PROJECT = gql`
-  query getProject($id: Number!) {
-    getProject(id: $id) @client {
-      id
-      title
-      sourceGroup
-      pitch
-      needStart
-      needEnd
-      state
-    }
-  }
-`
+import { QUERY_GET_PROJECT } from '../api/projects';
 
 const HomeProject = ({id}) =>
   <Query query={QUERY_GET_PROJECT} variables={{id}}>

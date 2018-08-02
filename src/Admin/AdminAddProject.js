@@ -9,30 +9,7 @@ import { Mutation } from 'react-apollo';
 
 import FormProject from './FormProject';
 import { PageTitle } from '../layouts';
-
-export const MUTATION_CREATE_PROJECT = gql`
-  mutation createProject(
-    $title: String!,
-    $pitch: String!,
-    $sourceGroup: String,
-    $needStart: String,
-    $needEnd: String,
-    $contactMethod: String,
-    $contactAddress: String,
-    $contactName: String,
-    ) {
-    createProject(
-      title: $title,
-      pitch: $pitch,
-      sourceGroup: $sourceGroup,
-      needStart: $needStart,
-      needEnd: $needEnd,
-      contactMethod: $contactMethod,
-      contactAddress: $contactAddress,
-      contactName: $contactName,
-    ) @client
-  }
-`
+import { MUTATION_CREATE_PROJECT, refetchQueries } from '../api/projects'
 
 const Title = ({project}) =>
   <PageTitle
@@ -49,10 +26,11 @@ const PROJECT_INITIAL_VALUES = {
   contactMethod: '',
   contactAddress: '',
   contactName: '',
+  sentPersonsNeeded: '',
 }
 
 const _FormProjectAdd = ({history}) =>
-  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={['AllProjects', 'activeProjects', 'projectCounts']}>
+  <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={refetchQueries}>
     {createProject =>
       <FormProject
         initialValues={PROJECT_INITIAL_VALUES}

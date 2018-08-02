@@ -7,7 +7,7 @@ import {
   Container,
 } from 'semantic-ui-react';
 import { Formik } from 'formik';
-import { string, object } from 'yup';
+import { string, object, number } from 'yup';
 
 import { FieldInputText, FieldInputDateTime, FieldSelect } from '../fields'
 
@@ -18,14 +18,15 @@ const schema = object().shape({
   pitch: string()
     .max(160, 'The pitch shouldn\'t be longer than a tweet, 160 letters please!')
     .required('Enter a pitch.'),
-  // sourceGroup: string()
-  //   .max(30, 'The source shouldn\'t be longer than 30 letters.')
-  //   .required('Enter a source.'),
-  // needStart: string().required(),
-  // needEnd: string().required(),
-  // contactMethod: string().required(),
-  // contactAddress: string().required(),
-  // contactName: string().required(),
+  sourceGroup: string()
+    .max(30, 'The source shouldn\'t be longer than 30 letters.')
+    .required('Enter a source.'),
+  needStart: string().required(),
+  needEnd: string().required(),
+  contactMethod: string().required(),
+  contactAddress: string().required(),
+  contactName: string().required(),
+  sentPersonsNeeded: number().integer().required(),
 })
 
 const contactOptions = [
@@ -57,6 +58,9 @@ const FormProject = ({initialValues, onSubmit, onCancel, okLabel, cancelLabel}) 
           fluid label='Project Source' placeholder='The group that needs help' />
 
         <Header as='h3'>What HALP do they need?</Header>
+
+        <FieldInputText name='sentPersonsNeeded' formik={formik}
+          label='How Many People' placeholder='A number'  />
 
         <FieldInputText name='title' formik={formik}
           label='Project Title' placeholder='A short, concise description'  />

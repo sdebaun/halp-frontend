@@ -6,22 +6,7 @@ import { Query } from 'react-apollo';
 import AdminProjectEdit from './AdminProjectEdit';
 import AdminProjectDetail from './AdminProjectDetail';
 
-export const QUERY_GET_PROJECT = gql`
-  query getProject($id: Number!) {
-    getProject(id: $id) @client {
-      id
-      title
-      sourceGroup
-      pitch
-      needStart
-      needEnd
-      state
-      contactMethod
-      contactAddress
-      contactName
-    }
-  }
-`
+import { QUERY_GET_PROJECT } from '../api/projects';
 
 const AdminProject = ({id}) =>
   <Query query={QUERY_GET_PROJECT} variables={{id}}>

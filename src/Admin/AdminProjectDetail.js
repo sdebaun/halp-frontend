@@ -39,18 +39,18 @@ const colorByPercent = percent => {
   return 'red'
 }
 
-export const PeopleStats = ({peopleNeeded, peopleSent, peopleConfirmed}) =>
+export const PeopleStats = ({sentPersonsNeeded, sentPersonCounts: {sent, confirmed, noshow}}) =>
   <Statistic.Group width="three" size='tiny'>
     <Statistic>
-      <Statistic.Value><Icon name='users'/> {peopleNeeded}</Statistic.Value>
+      <Statistic.Value><Icon name='users'/> {sentPersonsNeeded}</Statistic.Value>
       <Statistic.Label>Needed</Statistic.Label>
     </Statistic>
-    <Statistic color={colorByPercent(peopleSent / peopleNeeded)} >
-      <Statistic.Value><Icon name='play circle'/> {peopleSent}</Statistic.Value>
+    <Statistic color={colorByPercent((sent + confirmed - noshow) / sentPersonsNeeded)} >
+      <Statistic.Value><Icon name='play circle'/> {sent + confirmed - noshow}</Statistic.Value>
       <Statistic.Label>Sent</Statistic.Label>
     </Statistic>
-    <Statistic color={colorByPercent(peopleConfirmed / peopleNeeded)} >
-      <Statistic.Value><Icon name='checkmark box'/> {peopleConfirmed}</Statistic.Value>
+    <Statistic color={colorByPercent(confirmed / sentPersonsNeeded)} >
+      <Statistic.Value><Icon name='checkmark box'/> {confirmed}</Statistic.Value>
       <Statistic.Label>Confirm</Statistic.Label>
     </Statistic>
   </Statistic.Group>
@@ -104,7 +104,7 @@ const AdminProjectDetail = ({project}) =>
           <p>add a need</p>
         </Grid.Column>
         <Grid.Column>
-          <PeopleStats peopleNeeded={10} peopleSent={4} peopleConfirmed={2} />
+          <PeopleStats {...project} />
           <DeliveryInfo {...project} />
           <SendPerson />
         </Grid.Column>
