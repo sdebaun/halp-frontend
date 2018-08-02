@@ -1,6 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import Moment from 'react-moment';
+import { Mutation } from 'react-apollo';
+import { MUTATION_ADD_PROJECT_DETAIL, MUTATION_DELETE_PROJECT_DETAIL, refetchQueries } from '../api/projects';
+
 import {
   Grid,
   Step,
@@ -8,9 +11,13 @@ import {
   Segment,
   Icon,
   Header,
+  List,
+  Button,
 } from 'semantic-ui-react';
 
 import AdminProjectTitle from './AdminProjectTitle';
+import FormDetail from './FormDetail';
+
 
 const isSameDay = (a, b) =>
   moment(a).startOf('day').isSame(moment(b).startOf('day'))
@@ -88,6 +95,63 @@ export const DeliveryInfo = ({contactMethod, contactName, contactAddress}) =>
     <DeliveryContact contactName={contactName} contactAddress={contactAddress}/>
   </Segment>
 
+export const DetailItem = ({detail: {id, text}}) =>
+  <List.Item>
+    <List.Content floated='right'>
+      <Button icon='edit' />
+      <ButtonDeleteDetail id={id} />
+    </List.Content>
+    <Icon name='checkmark'/>
+    <List.Content>{text}</List.Content>
+  </List.Item>
+
+
+
+export const ButtonDeleteDetail = ({id}) =>
+<Mutation mutation={MUTATION_DELETE_PROJECT_DETAIL} refetchQueries={refetchQueries}>
+  {deleteProjectDetail =>
+    <Button icon='trash' onClick={() => deleteProjectDetail({variables: {id}})} />
+  }
+</Mutation>
+
+export const DetailAdd = ({id}) =>
+  <Mutation mutation={MUTATION_ADD_PROJECT_DETAIL} refetchQueries={refetchQueries}>
+    {addProjectDetail => 
+      <FormDetail
+        initialValues={{text: ''}}
+        okLabel={'Add'}
+        cancelLabel={'Cancel'}
+        onSubmit={(values, {setSubmitting, setErrors, resetForm}) => {
+          addProjectDetail({variables: {projectId: id, ...values}})
+          .then(({data: {addProjectDetail: result}}) => {
+            if (result) {
+              console.log('result', result)
+              setSubmitting(false)
+              resetForm()
+              // history.push(`/admin/project/${result.id}`)
+            }
+            else {
+              setSubmitting(false)
+              setErrors({failure: 'I can\'t find anyone with that email and password.'})
+            }
+          })
+        }}
+        onCancel={() => {}}
+        />
+    }
+  </Mutation>
+
+export const Details = ({id, details}) =>
+  <div>
+    <h3>What are they looking for?</h3>
+    <List divided verticalAlign='middle' size='large'>
+      { details.map(d => <DetailItem key={d.id} detail={d} />) }
+      <List.Item>
+        <DetailAdd id={id} />
+      </List.Item>
+    </List>
+  </div>
+
 const SendPerson = () =>
   <Segment>
     <Header as='h2'>Send a Person</Header>
@@ -100,8 +164,7 @@ const AdminProjectDetail = ({project}) =>
         <Grid.Column>
           <p style={{fontSize: '1.5rem', fontWeight: 200}}>{project.pitch}</p>
           <TimeRange {...project} />
-          <h3>Needs</h3>
-          <p>add a need</p>
+          <Details {...project} />
         </Grid.Column>
         <Grid.Column>
           <PeopleStats {...project} />

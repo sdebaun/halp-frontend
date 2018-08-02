@@ -130,3 +130,25 @@ export const MUTATION_UPDATE_PROJECT = gql`
     }
   }
 `
+
+export const MUTATION_ADD_PROJECT_DETAIL = gql`
+  mutation addProjectDetail(
+    $projectId: String!,
+    $text: String!
+  ) {
+    addProjectDetail(
+      projectId: $projectId,
+      text: $text
+    ) {
+      id
+    }
+  }
+`
+
+export const MUTATION_DELETE_PROJECT_DETAIL = gql`
+  mutation deleteProjectDetail(
+    $id: String!,
+  ) {
+    deleteProjectDetail(id: $id)
+  }
+`
