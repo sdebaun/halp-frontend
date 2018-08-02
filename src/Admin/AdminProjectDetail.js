@@ -2,7 +2,8 @@ import React from 'react';
 import moment from 'moment';
 import Moment from 'react-moment';
 import { Mutation } from 'react-apollo';
-import { MUTATION_ADD_PROJECT_DETAIL, MUTATION_DELETE_PROJECT_DETAIL, refetchAll, refetchSpecific } from '../api/projects';
+import { MUTATION_ADD_PROJECT_DETAIL, MUTATION_DELETE_PROJECT_DETAIL, MUTATION_UPDATE_PROJECT_DETAIL, refetchSpecific } from '../api/projects';
+import { Toggle } from 'react-powerplug';
 
 import {
   Grid,
@@ -96,20 +97,55 @@ export const DeliveryInfo = ({contactMethod, contactName, contactAddress}) =>
   </Segment>
 
 export const DetailItem = ({projectId, detail: {id, text}}) =>
-  <List.Item>
-    <List.Content floated='right'>
-      <Button icon='edit' />
-      <ButtonDeleteDetail id={id} projectId={projectId}/>
-    </List.Content>
-    <Icon name='checkmark'/>
-    <List.Content>{text}</List.Content>
-  </List.Item>
+<Toggle initial={false} onChange={val => console.log('new toggle', val)}>
+  {({toggle, on}) => on
+    ? <List.Item>
+        <DetailUpdate detail={{id, text}} projectId={projectId} toggle={toggle} />
+      </List.Item>
+    : <List.Item>
+      <List.Content floated='right'>
+        <Button icon='edit' onClick={toggle}/>
+        <ButtonDeleteDetail id={id} projectId={projectId}/>
+      </List.Content>
+      <Icon name='checkmark'/>
+      <List.Content>{text}</List.Content>
+    </List.Item>
+  }
+</Toggle>
 
 export const ButtonDeleteDetail = ({projectId, id}) =>
 <Mutation mutation={MUTATION_DELETE_PROJECT_DETAIL} refetchQueries={refetchSpecific(projectId)}>
   {deleteProjectDetail =>
     <Button icon='trash' onClick={() => deleteProjectDetail({variables: {id}})} />
   }
+</Mutation>
+
+MUTATION_UPDATE_PROJECT_DETAIL
+
+export const DetailUpdate = ({detail, projectId, toggle}) =>
+<Mutation mutation={MUTATION_UPDATE_PROJECT_DETAIL} refetchQueries={refetchSpecific(projectId)}>
+{updateProjectDetail => 
+  <FormDetail
+    initialValues={detail}
+    okLabel={'Update'}
+    cancelLabel={'Cancel'}
+    onSubmit={(values, {setSubmitting, setErrors, resetForm}) => {
+      updateProjectDetail({variables: {id: detail.id, ...values}})
+      .then(({data: {updateProjectDetail: result}}) => {
+        if (result) {
+          console.log('result', result)
+          setSubmitting(false)
+          toggle()
+        }
+        else {
+          setSubmitting(false)
+          setErrors({failure: 'I can\'t find anyone with that email and password.'})
+        }
+      })
+    }}
+    onCancel={toggle}
+    />
+}
 </Mutation>
 
 export const DetailAdd = ({id}) =>

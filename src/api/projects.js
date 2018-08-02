@@ -177,3 +177,14 @@ export const MUTATION_DELETE_PROJECT_DETAIL = gql`
     deleteProjectDetail(id: $id)
   }
 `
+
+export const MUTATION_UPDATE_PROJECT_DETAIL = gql`
+  mutation updateProjectDetail(
+    $id: String!,
+    $text: String!
+  ) {
+    updateProjectDetail(id: $id, text: $text) {
+      id
+    }
+  }
+`
