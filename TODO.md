@@ -5,12 +5,12 @@ X delete project
 - project detail views for public
 - project detail views for admin
 - add/confirm/delete sentPersons
-- add/delete details
+x add/delete details
 - link menu project counts to views of those states
-- show sentPersons count on project cards
+x show sentPersons count on project cards
 
 - use react-slick to make home page carousel of large cards
-- a real graphql server that runs locally (apollo-server plus that json db)
+x a real graphql server that runs locally (apollo-server plus that json db)
 - real auth with authtoken
 - subscriptions for project listing
 

@@ -2,7 +2,15 @@ import React from 'react';
 import moment from 'moment';
 import Moment from 'react-moment';
 import { Mutation } from 'react-apollo';
-import { MUTATION_ADD_PROJECT_DETAIL, MUTATION_DELETE_PROJECT_DETAIL, MUTATION_UPDATE_PROJECT_DETAIL, refetchSpecific } from '../api/projects';
+import {
+  MUTATION_ADD_PROJECT_DETAIL,
+  MUTATION_DELETE_PROJECT_DETAIL,
+  MUTATION_UPDATE_PROJECT_DETAIL,
+  MUTATION_ADD_PROJECT_SENTPERSON,
+  MUTATION_DELETE_PROJECT_SENTPERSON,
+  MUTATION_UPDATE_PROJECT_SENTPERSON,
+  refetchSpecific
+} from '../api/projects';
 import { Toggle } from 'react-powerplug';
 
 import {
@@ -18,7 +26,7 @@ import {
 
 import AdminProjectTitle from './AdminProjectTitle';
 import FormDetail from './FormDetail';
-
+import FormSentPerson from './FormSentPerson';
 
 const isSameDay = (a, b) =>
   moment(a).startOf('day').isSame(moment(b).startOf('day'))
@@ -120,8 +128,6 @@ export const ButtonDeleteDetail = ({projectId, id}) =>
   }
 </Mutation>
 
-MUTATION_UPDATE_PROJECT_DETAIL
-
 export const DetailUpdate = ({detail, projectId, toggle}) =>
 <Mutation mutation={MUTATION_UPDATE_PROJECT_DETAIL} refetchQueries={refetchSpecific(projectId)}>
 {updateProjectDetail => 
@@ -186,10 +192,50 @@ export const Details = ({id, details}) =>
     </List>
   </div>
 
-const SendPerson = () =>
-  <Segment>
-    <Header as='h2'>Send a Person</Header>
-  </Segment>
+const SentPersonAdd = ({id}) =>
+<Mutation mutation={MUTATION_ADD_PROJECT_SENTPERSON} refetchQueries={refetchSpecific(id)}>
+{(addProjectDetail, {error}) => 
+  <FormSentPerson
+    initialValues={{name: '', email: ''}}
+    okLabel={'Add'}
+    cancelLabel={'Cancel'}
+    onSubmit={(values, {setSubmitting, setErrors, resetForm}) => {
+      addProjectDetail({variables: {projectId: id, ...values}})
+      .then(({data: {addProjectSentPerson: result}}) => {
+        if (result) {
+          console.log('result', result)
+          setSubmitting(false)
+          resetForm()
+        }
+        else {
+          console.log('err', error)
+          setSubmitting(false)
+          setErrors({failure: error})
+        }
+      })
+    }}
+    onCancel={() => {}}
+    />
+}
+</Mutation>
+
+const SentPersonItem = ({projectId, sentPerson}) =>
+  <List.Item>
+    {sentPerson.name} : {sentPerson.email} : {sentPerson.state}
+  </List.Item>
+
+const SentPersons = ({id, sentPersons}) =>
+  <div>
+    <Header as='h3'>Sending People</Header>
+    <List divided verticalAlign='middle' size='large'>
+      { sentPersons.length == 0 && <List.Item>Nobody has been sent to help.</List.Item> }
+      { sentPersons.map(p => <SentPersonItem key={p.id} projectId={id} sentPerson={p}/>)}
+      <List.Item>
+        <SentPersonAdd id={id}/>
+      </List.Item>
+    </List>
+  </div>
+
 const AdminProjectDetail = ({project}) =>
   <div>
     <AdminProjectTitle project={project} linkTo='/admin' />
@@ -203,7 +249,7 @@ const AdminProjectDetail = ({project}) =>
         <Grid.Column>
           <PeopleStats {...project} />
           <DeliveryInfo {...project} />
-          <SendPerson />
+          <SentPersons {...project} />
         </Grid.Column>
       </Grid.Row>
     </Grid>

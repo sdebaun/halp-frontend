@@ -188,3 +188,38 @@ export const MUTATION_UPDATE_PROJECT_DETAIL = gql`
     }
   }
 `
+
+export const MUTATION_ADD_PROJECT_SENTPERSON = gql`
+  mutation addProjectSentPerson(
+    $projectId: String!,
+    $name: String!,
+    $email: String
+  ) {
+    addProjectSentPerson(
+      projectId: $projectId,
+      name: $name,
+      email: $email
+    ) {
+      id
+    }
+  }
+`
+
+export const MUTATION_DELETE_PROJECT_SENTPERSON = gql`
+  mutation deleteProjectSentPerson(
+    $id: String!,
+  ) {
+    deleteProjectSentPerson(id: $id)
+  }
+`
+
+export const MUTATION_UPDATE_PROJECT_SENTPERSON = gql`
+  mutation updateProjectSentPerson(
+    $id: String!,
+    $state: String!
+  ) {
+    updateProjectSentPerson(id: $id, state: $state) {
+      id
+    }
+  }
+`
