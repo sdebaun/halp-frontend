@@ -9,7 +9,7 @@ import {
 import { Formik } from 'formik';
 import { string, object, number } from 'yup';
 
-import { FieldInputText, FieldInputDateTime, FieldSelect } from '../fields'
+import { FieldInputText, FieldInputDateTime, FieldSelect } from '../../fields'
 
 const schema = object().shape({
   title: string()

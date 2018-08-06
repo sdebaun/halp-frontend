@@ -4,9 +4,9 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
 import AdminProjectEdit from './AdminProjectEdit';
-import AdminProjectDetail from './AdminProjectDetail';
+import AdminProjectView from './AdminProjectView';
 
-import { QUERY_GET_PROJECT } from '../api/projects';
+import { QUERY_GET_PROJECT } from '../../api/projects';
 
 const AdminProject = ({id}) =>
   <Query query={QUERY_GET_PROJECT} variables={{id}}>
@@ -15,7 +15,7 @@ const AdminProject = ({id}) =>
       return (
         <div>
           <Route path={`/admin/project/${id}`} exact render={() =>
-            <AdminProjectDetail project={getProject} />
+            <AdminProjectView project={getProject} />
           } />
           <Route path={`/admin/project/${id}/edit`} exact render={() =>
             <AdminProjectEdit project={getProject} />

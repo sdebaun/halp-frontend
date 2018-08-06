@@ -67,9 +67,24 @@ export const QUERY_GET_PROJECT = gql`
       }
       sentPersonsNeeded
       sentPersons {
-        id
-        name
-        state
+        sent {
+          id
+          name
+          email
+          state
+        }
+        confirmed {
+          id
+          name
+          email
+          state
+        }
+        noshow {
+          id
+          name
+          email
+          state
+        }
       }
       sentPersonCounts {
         sent

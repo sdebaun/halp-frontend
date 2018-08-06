@@ -3,7 +3,7 @@ import {
   Icon,
 } from 'semantic-ui-react';
 
-import { PageTitle } from '../layouts';
+import { PageTitle } from '../../layouts';
 import AdminProjectMenu from './AdminProjectMenu';
 
 const AdminProjectTitle = ({project, linkTo}) =>

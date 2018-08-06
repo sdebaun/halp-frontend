@@ -7,7 +7,7 @@ import {
 import { Formik } from 'formik';
 import { string, object } from 'yup';
 
-import { FieldInputText } from '../fields'
+import { FieldInputText } from '../../fields'
 
 const schema = object().shape({
   name: string()

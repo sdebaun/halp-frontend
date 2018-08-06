@@ -5,11 +5,14 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import {
   Panel
-} from '../ui';
+} from '../../ui';
 
-import FormProject from './FormProject'
+import FormProject from '../components/FormProject'
 import AdminProjectTitle from './AdminProjectTitle';
-import { MUTATION_UPDATE_PROJECT, refetchSpecific } from '../api/projects';
+import {
+  MUTATION_UPDATE_PROJECT,
+  refetchSpecific
+} from '../../api/projects';
 
 const _FormProjectUpdate = ({history, project}) =>
   <Mutation mutation={MUTATION_UPDATE_PROJECT} refetchQueries={refetchSpecific(project.id)}>

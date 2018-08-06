@@ -5,7 +5,6 @@ import {
   Header,
   Icon,
 } from 'semantic-ui-react';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { QUERY_GET_PROJECT } from '../api/projects';
 

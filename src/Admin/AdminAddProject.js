@@ -7,7 +7,7 @@ import {
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
-import FormProject from './FormProject';
+import FormProject from './components/FormProject';
 import { PageTitle } from '../layouts';
 import { MUTATION_CREATE_PROJECT, refetchAll } from '../api/projects'
 

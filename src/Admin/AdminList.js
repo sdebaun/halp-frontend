@@ -8,7 +8,8 @@ import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
 import { QUERY_ACTIVE_PROJECTS } from '../api/projects'
 import { Query } from 'react-apollo'
-import { PeopleStats, TimeRange } from './AdminProjectDetail';
+import PeopleStats from './components/PeopleStats';
+import TimeRange from './components/TimeRange';
 
 const AdminCard = ({item: project}) =>
   <Card as={Link} to={`/admin/project/${project.id}`} fluid={true}>
@@ -19,7 +20,7 @@ const AdminCard = ({item: project}) =>
     </Card.Content>
   </Card>
 
-const AdminCards = ({cols}) =>
+const AdminList = ({cols}) =>
   <Query query={QUERY_ACTIVE_PROJECTS}>
     {({ loading, data: { projectsActive } }) => {
       if (loading) { return <div>LOADING...</div> }
@@ -31,4 +32,4 @@ const AdminCards = ({cols}) =>
     }}
   </Query>
 
-export default AdminCards
+export default AdminList

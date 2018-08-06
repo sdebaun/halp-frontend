@@ -7,7 +7,11 @@ import {
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
-import { MUTATION_COPY_PROJECT, MUTATION_DELETE_PROJECT, refetchAll } from '../api/projects';
+import {
+  MUTATION_COPY_PROJECT,
+  MUTATION_DELETE_PROJECT,
+  refetchAll
+} from '../../api/projects';
 
 const _DropdownItemDelete = ({project, history}) =>
   <Mutation mutation={MUTATION_DELETE_PROJECT} refetchQueries={refetchAll}>

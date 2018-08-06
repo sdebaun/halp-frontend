@@ -13,7 +13,7 @@ import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher } from '../layouts
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
-import AdminCards from './AdminCards';
+import AdminList from './AdminList';
 import AdminProject from './AdminProject';
 import AdminAddProject from './AdminAddProject';
 import { QUERY_PROJECT_COUNTS } from '../api/projects';
@@ -42,13 +42,13 @@ const AdminHelmet = () =>
 const AdminContent = () =>
   <div>
     <Route path='/admin' exact render={() =>
-      <AdminCards />
+      <AdminList />
       } />
     <Route path='/admin/closed' exact render={() =>
-      <AdminCards />
+      <AdminList />
       } />
     <Route path='/admin/old' exact render={() =>
-      <AdminCards />
+      <AdminList />
       } />
     <Route path='/admin/add' exact render={() =>
       <AdminAddProject />
