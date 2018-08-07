@@ -5,17 +5,10 @@ import {
   Icon,
 } from 'semantic-ui-react';
 
+import { colorByPercent } from '../../ui'
 
-const colorByPercent = percent => {
-  if (percent >= 1) { return 'green' }
-  if (percent >= 0.75) { return 'olive' }
-  if (percent >= 0.5) { return 'yellow' }
-  if (percent >= 0.25) { return 'orange' }
-  return 'red'
-}
-
-const PeopleStats = ({sentPersonsNeeded, sentPersonCounts: {sent, confirmed, noshow}}) =>
-<Statistic.Group width="three" size='tiny'>
+const PeopleStats = ({size='mini', sentPersonsNeeded, sentPersonCounts: {sent, confirmed, noshow}}) =>
+<Statistic.Group widths="three" size={size}>
   <Statistic>
     <Statistic.Value><Icon name='users'/> {sentPersonsNeeded}</Statistic.Value>
     <Statistic.Label>Needed</Statistic.Label>

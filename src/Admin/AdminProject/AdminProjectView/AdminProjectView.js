@@ -69,7 +69,7 @@ const AdminProjectView = ({project}) =>
           <Details {...project} />
         </Grid.Column>
         <Grid.Column>
-          <PeopleStats {...project} />
+          <PeopleStats size='tiny' {...project} />
           <DeliveryInfo {...project} />
           <SentPersons {...project} />
         </Grid.Column>

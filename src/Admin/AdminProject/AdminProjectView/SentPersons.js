@@ -157,7 +157,7 @@ const SentPersons = ({id, sentPersons}) =>
   <State initial={{filter: 'sent'}}>
     {({state: {filter}, setState}) =>
     <div>
-      <Header as='h3'>People {filter}</Header>
+      <Header as='h3'>People {filter.replace(/^\w/, c => c.toUpperCase())}</Header>
       <SentPersonsFilter filter={filter} setState={setState}/>
       <SentPersonsList id={id} sentPersons={sentByFilter(sentPersons, filter)} stateProps={propsForState(filter)} />
     </div>

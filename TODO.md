@@ -4,9 +4,9 @@ X copy project
 X delete project
 - project detail views for public
 - project detail views for admin
-- add/confirm/delete sentPersons
+x add/confirm/delete sentPersons
 x add/delete details
-- link menu project counts to views of those states
+x link menu project counts to views of those states
 x show sentPersons count on project cards
 
 - use react-slick to make home page carousel of large cards

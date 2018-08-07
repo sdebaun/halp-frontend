@@ -10,16 +10,16 @@ const isSameDay = (a, b) =>
 
 const TimeRange = ({needStart, needEnd}) => 
   <Step.Group fluid>
-    <Step>
+    <Step active style={{padding: '8px'}}>
       <Step.Content>
-        <Step.Title><Moment format='ddd D MMM' date={needStart}/></Step.Title>
-        <Step.Description><Moment format='h:mm a' date={needStart}/></Step.Description>
+        <Step.Description><Moment format='ddd D MMM' date={needStart}/></Step.Description>
+        <Step.Title><Moment format='h:mm a' date={needStart}/></Step.Title>
       </Step.Content>
     </Step>
-    <Step>
+    <Step style={{padding: '8px'}}>
       <Step.Content>
-      <Step.Title>{!isSameDay(needStart, needEnd) ? <Moment format='ddd D MMM' date={needEnd}/> : '-'}</Step.Title>
-        <Step.Description><Moment format='h:mm a' date={needEnd}/></Step.Description>
+        <Step.Description>{!isSameDay(needStart, needEnd) ? <Moment format='ddd D MMM' date={needEnd}/> : '-'}</Step.Description>
+        <Step.Title><Moment format='h:mm a' date={needEnd}/></Step.Title>
       </Step.Content>
     </Step>
   </Step.Group>
