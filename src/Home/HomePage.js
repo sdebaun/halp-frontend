@@ -11,6 +11,7 @@ import { LeftMenuLayout, ResponsiveSwitcher } from '../layouts';
 
 import HomeCards from './HomeCards';
 import HomeProject from './HomeProject';
+import HomeCarousel from './HomeCarousel';
 
 const ButtonSignin = () =>
   <Link to={'/signin'}>
@@ -20,7 +21,7 @@ const ButtonSignin = () =>
 const HomeContent = () =>
   <div>
     <Route path='/' exact render={() =>
-      <HomeCards />
+      <HomeCarousel />
       } />
     <Route path='/help/:id' render={({match: {params: {id}}}) =>
         <HomeProject id={id}/>

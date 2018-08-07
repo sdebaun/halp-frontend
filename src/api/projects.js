@@ -38,6 +38,28 @@ export const QUERY_ACTIVE_PROJECTS = gql`
   }
 `
 
+export const QUERY_ACTIVE_PROJECTS_DETAILED = gql`
+  query projectsActiveDetailed {
+    projectsActive {
+      id
+      title
+      sourceGroup
+      pitch
+      needStart
+      needEnd
+      sentPersonsNeeded
+      sentPersonCounts {
+        sent
+        confirmed
+        noshow
+      }
+      details {
+        text
+      }
+    }
+  }
+`
+
 export const QUERY_PROJECT_COUNTS = gql`
   query projectCounts {
     projectCounts {
