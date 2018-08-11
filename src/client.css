@@ -19,3 +19,9 @@ body {
   /* margin: 0; */
   /* padding: 0; */
 }
+
+/* what the actual fuck */
+
+.slick-prev:before, .slick-next:before {
+  color: black !important;
+}
