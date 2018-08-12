@@ -136,7 +136,7 @@ const HomeSlide = ({project}) =>
         <Segment inverted color={colorForTiming(project)} style={{padding: '2rem'}}>
           {project.contactMethod == 'SCHEDULE' ? <DeliverySchedule {...project}/> : <DeliveryWalkup {...project}/>}
         </Segment>
-        <Segment basic style={{padding: '2rem', backgroundColor: '#EEE'}}>
+        <Segment basic style={{padding: '2rem', paddingBottom: '4rem', backgroundColor: '#EEE'}}>
           <TimeRange {...project} />
         </Segment>
         <Segment basic>
