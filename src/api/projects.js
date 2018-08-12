@@ -48,6 +48,7 @@ export const QUERY_ACTIVE_PROJECTS_DETAILED = gql`
       needStart
       needEnd
       sentPersonsNeeded
+      contactMethod
       sentPersonCounts {
         sent
         confirmed

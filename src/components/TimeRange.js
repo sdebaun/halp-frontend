@@ -18,7 +18,7 @@ const TimeRange = ({needStart, needEnd}) =>
     </Step>
     <Step style={{padding: '8px'}}>
       <Step.Content>
-        <Step.Description>{!isSameDay(needStart, needEnd) ? <Moment format='ddd D MMM' date={needEnd}/> : '-'}</Step.Description>
+        <Step.Description>{!isSameDay(needStart, needEnd) ? <Moment format='ddd D MMM' date={needEnd}/> : ''}</Step.Description>
         <Step.Title><Moment format='h:mm a' date={needEnd}/></Step.Title>
       </Step.Content>
     </Step>

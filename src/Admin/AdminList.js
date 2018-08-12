@@ -10,8 +10,8 @@ import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
 import { QUERY_ACTIVE_PROJECTS } from '../api/projects'
 import { Query } from 'react-apollo'
-import PeopleStats from './components/PeopleStats';
-import TimeRange from './components/TimeRange';
+import PeopleStats from '../components/PeopleStats';
+import TimeRange from '../components/TimeRange';
 
 const AdminCard = ({item: project}) =>
   <Card as={Link} to={`/admin/project/${project.id}`} fluid={true}>

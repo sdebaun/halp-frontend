@@ -14,9 +14,7 @@ import HomeProject from './HomeProject';
 import HomeCarousel from './HomeCarousel';
 
 const ButtonSignin = () =>
-  <Link to={'/signin'}>
-    <Button inverted fluid>sign in to admin</Button>
-  </Link>
+  <Button as={Link} to={'/signin'} inverted fluid>sign in to admin</Button>
 
 const HomeContent = () =>
   <div>
@@ -24,20 +22,25 @@ const HomeContent = () =>
       <HomeCarousel />
       } />
     <Route path='/help/:id' render={({match: {params: {id}}}) =>
-        <HomeProject id={id}/>
+      <HomeProject id={id}/>
       } />
   </div>
 
 const HomeTitleLarge = () =>
-  <Header as="h1" size="huge" icon textAlign="center" inverted color="grey">
+  <Header as="h1" size="huge" icon textAlign="center" inverted color="grey" style={{fontSize: '5rem'}}>
     <Image verticalAlign='top' src="/logo.jpeg" style={{width: '100%'}} centered />
-    <p>work for<br/>the man</p>
+    <p style={{paddingBottom: '4rem'}}>
+      what do<br/>
+      you want<br/>
+      to HALP<br/>
+      with?
+    </p>
   </Header>
 
 const HomeTitleSmall = () =>
   <Header as="h1" size="small" icon textAlign="center" inverted color="grey">
     <Image verticalAlign='top' src="/logo.jpeg" size="tiny" centered />
-    <p>work for<br/>the man</p>
+    <p>what do you want to HALP with?</p>
   </Header>
 
 const HomeTitle = () =>

@@ -8,12 +8,9 @@ import {
 } from '../../../api/projects';
 
 import {
-  Grid,
-  Segment,
   Icon,
   Header,
   List,
-  Button,
   Menu,
   Dropdown,
 } from 'semantic-ui-react';
@@ -26,7 +23,7 @@ const SentPersonMenu = ({id, projectId, state}) =>
       <Dropdown button icon='caret down' className='icon' direction='right'>
         <Dropdown.Menu style={{left: 'auto', right:0}}>
           <DropdownItemUpdate id={id} projectId={projectId} state='confirmed' icon='checkmark box' color='green' text='confirm' />
-          <DropdownItemUpdate id={id} projectId={projectId} state='noshow' icon='exclamation triangle box' color='red' text='noshow' />
+          <DropdownItemUpdate id={id} projectId={projectId} state='noshow' icon='exclamation triangle' color='red' text='noshow' />
           <DropdownItemUpdate id={id} projectId={projectId} state='sent' icon='play circle' color='yellow' text='sent' />
           <Dropdown.Divider/>
           <DropdownItemDelete id={id} projectId={projectId} />
