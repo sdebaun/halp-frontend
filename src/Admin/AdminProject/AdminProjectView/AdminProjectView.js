@@ -10,37 +10,36 @@ import {
 import AdminProjectTitle from '../AdminProjectTitle';
 import TimeRange from '../../../components/TimeRange';
 import PeopleStats from '../../../components/PeopleStats';
-import SentPersons from './SentPersons';
+import SentPersons, { SentPersonAdd } from './SentPersons';
 import Details from './Details';
 
-import DeliveryMethod from '../../../components/DeliveryMethod';
-import DeliveryContact from '../../../components/DeliveryContact';
 import moment from 'moment';
 import Moment from 'react-moment';
-const DeliveryState = ({contactMethod}) =>
-<DeliveryFormat>
-  </DeliveryFormat>
-const DeliveryFormat = ({needStart, children, icon}) =>
-  <Header as='h2' style={{fontWeight: 200}}>
+
+const DeliveryInfo = ({needStart, children, icon}) =>
+  <Header as='h2' style={{fontWeight: 200}} inverted>
     <Icon name={icon}/>
     <Header.Content>
-      {children}<br/>
-      <span style={{fontWeight: 800, fontSize: '3rem'}}>
+      {children} <span style={{fontWeight: 800}}>
       { moment.now() > moment(needStart) ? 'RIGHT MEOW' : <Moment fromNow>{needStart}</Moment>}
-      !
       </span>
+      <br/>
+      with <span style={{fontWeight: 800}}>Bob</span> at <span style={{fontWeight: 800}}>4 & E</span>
     </Header.Content>
   </Header>
 
-// const DeliverySchedule = ({needStart}) =>
-//   <DeliveryCTA needStart={needStart} icon='calendar check outline'>
-//     Schedule your time to HALP
-//   </DeliveryCTA>
+const DeliverySchedule = ({needStart}) =>
+  <DeliveryInfo needStart={needStart} icon='calendar check outline'>
+    Schedule Someone
+  </DeliveryInfo>
 
-// const DeliveryWalkup = ({needStart}) =>
-//   <DeliveryCTA needStart={needStart} icon='child'>
-//     Walk up and HALP
-//   </DeliveryCTA>
+const DeliveryWalkup = ({needStart}) =>
+  <DeliveryInfo needStart={needStart} icon='child'>
+    Send Walkups
+  </DeliveryInfo>
+
+const colorForTiming = ({needStart}) =>
+  moment(needStart) < moment.now() ? 'orange' : 'yellow'
 
 const AdminProjectView = ({project}) =>
   <div>
@@ -60,13 +59,15 @@ const AdminProjectView = ({project}) =>
         </Grid.Column>
         <Grid.Column>
           <Segment basic>
-            Schedule 4 hours from now<br/>
-            with Bob at 4 &amp; E
-          </Segment>
           <PeopleStats size='small' {...project} />
-          {/* <DeliveryMethod {...project} />
-          <DeliveryContact {...project} /> */}
+          </Segment>
+          <Segment color={colorForTiming(project)} inverted>
+            {project.contactMethod === 'SCHEDULE' ? <DeliverySchedule {...project}/> : <DeliveryWalkup {...project}/>}
+            <SentPersonAdd {...project}/>
+          </Segment>
+          <Segment basic>
           <SentPersons {...project} />
+          </Segment>
         </Grid.Column>
       </Grid.Row>
     </Grid>

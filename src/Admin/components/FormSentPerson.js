@@ -7,14 +7,16 @@ import {
 import { Formik } from 'formik';
 import { string, object } from 'yup';
 
-import { FieldInputText } from '../../fields'
+import { FieldInputText, FieldRadio } from '../../fields'
 
 const schema = object().shape({
   name: string()
     .max(80, 'Do they really need a name larger than 80 letters?')
     .required('What\'s their playa name?'),
   email: string()
-    .email()
+    .email(),
+  state: string()
+    .required('Are they a maybe or a probably?')
 })
 
 const FormDetail = ({initialValues, onSubmit, onCancel, okLabel, cancelLabel}) =>
@@ -29,10 +31,16 @@ const FormDetail = ({initialValues, onSubmit, onCancel, okLabel, cancelLabel}) =
 
         <FieldInputText name='name' formik={formik}
           fluid label='Playa Name' placeholder='What crazy name do they go by' />
-
+        <br/>
+        <Form.Group inline>
+          <label>They Going To Show Up?</label>
+          <FieldRadio name='state' label='Maybe' value='noshow' formik={formik}/>
+          <FieldRadio name='state' label='Probably' value='sent' formik={formik}/>
+        </Form.Group>
+  
         <FieldInputText name='email' formik={formik}
           fluid label='Email (optional)' placeholder='If we get the email they use for burner profiles, we can send them a thank you card!' />
-
+        <br/>
         <Button.Group fluid>
           <Button color='green' size='large' type='submit' disabled={formik.isSubmitting}>
             {okLabel}

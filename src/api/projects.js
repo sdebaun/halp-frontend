@@ -237,12 +237,14 @@ export const MUTATION_ADD_PROJECT_SENTPERSON = gql`
   mutation addProjectSentPerson(
     $projectId: String!,
     $name: String!,
-    $email: String
+    $email: String,
+    $state: String!
   ) {
     addProjectSentPerson(
       projectId: $projectId,
       name: $name,
-      email: $email
+      email: $email,
+      state: $state
     ) {
       id
     }

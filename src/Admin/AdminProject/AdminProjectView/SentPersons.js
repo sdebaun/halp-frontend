@@ -54,11 +54,11 @@ const DropdownItemDelete = ({id, projectId}) =>
   }
 </Mutation>
 
-const SentPersonAdd = ({id}) =>
+export const SentPersonAdd = ({id}) =>
 <Mutation mutation={MUTATION_ADD_PROJECT_SENTPERSON} refetchQueries={refetchSpecific(id)}>
 {(addProjectDetail, {error}) => 
   <FormSentPerson
-    initialValues={{name: '', email: ''}}
+    initialValues={{name: '', email: '', state: 'noshow'}}
     okLabel={'Add'}
     cancelLabel={'Cancel'}
     onSubmit={(values, {setSubmitting, setErrors, resetForm}) => {
@@ -123,22 +123,19 @@ const _SentPersonsList = ({id, sentPersons, stateProps}) =>
   <List divided verticalAlign='middle' size='large'>
     { sentPersons.length === 0 && <List.Item>{stateProps.emptyTextForState}</List.Item> }
     { sentPersons.map(p => <SentPersonItem stateProps={stateProps} key={p.id} projectId={id} sentPerson={p}/>)}
-    <List.Item>
-      <SentPersonAdd id={id}/>
-    </List.Item>
   </List>
 
 const SentPersonsList = logProp(_SentPersonsList, 'sentState')
 
 const SentPersonsFilter = ({filter, setState}) =>
   <Menu pointing secondary>
-    <Menu.Item active={filter==='sent'} onClick={()=>setState({filter: 'sent'})}>sent</Menu.Item>
+    <Menu.Item active={filter==='sent'} onClick={()=>setState({filter: 'sent'})}>on the way</Menu.Item>
     <Menu.Item active={filter==='confirmed'} onClick={()=>setState({filter: 'confirmed'})}>confirmed</Menu.Item>
-    <Menu.Item active={filter==='noshow'} onClick={()=>setState({filter: 'noshow'})}>noshow</Menu.Item>
     <Menu.Item active={filter==='all'} onClick={()=>setState({filter: 'all'})}>all</Menu.Item>
   </Menu>
 
 const sentByFilter = (sentPersons, filter) => {
+  if (filter === 'sent') return [...sentPersons['sent'], ...sentPersons['noshow']]
   if (filter === 'all') return [...sentPersons['sent'], ...sentPersons['confirmed'], ...sentPersons['noshow']]
   return sentPersons[filter]
 }

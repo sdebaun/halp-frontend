@@ -28,3 +28,15 @@ export const FieldSelect = ({Klass, formik: {handleBlur, handleChange, setFieldV
     handleBlur: e => setFieldTouched(props.name, true),
     ...formik
     }}/>
+
+export const FieldRadio = props =>
+    <FormikField Klass={Form.Radio} {...props}
+      checked={props.formik.values[props.name]===props.value}
+      formik={{
+        ...props.formik,
+        handleChange: () => {
+          console.log(props.name, props.value)
+          props.formik.setFieldValue(props.name, props.value)
+        },
+        handleBlur: e => props.formik.setFieldTouched(props.name, true),
+        }}/>
