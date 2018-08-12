@@ -5,6 +5,7 @@ import {
   CardGroup,
   Progress,
   colorByPercent,
+  colorByScore,
 } from '../ui';
 import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
@@ -15,7 +16,7 @@ import TimeRange from '../components/TimeRange';
 
 const AdminCard = ({item: project}) =>
   <Card as={Link} to={`/admin/project/${project.id}`} fluid={true}>
-    <Progress percent={100 * project.sentPersonCounts.confirmed / project.sentPersonsNeeded} attached='top' size='tiny' color={colorByPercent(project.sentPersonCounts.confirmed / project.sentPersonsNeeded)}/>
+    <Progress percent={project.sentPersonsScore * 100} attached='top' size='tiny' color={colorByPercent(project.sentPersonsScore * 100)}/>
     <Card.Content>
       <Card.Meta style={{paddingBottom: '0.5rem'}}>{project.sourceGroup}</Card.Meta>
       <Card.Header>{project.title}</Card.Header>

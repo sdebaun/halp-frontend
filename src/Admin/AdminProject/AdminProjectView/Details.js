@@ -66,7 +66,7 @@ const DetailUpdate = ({detail, projectId, toggle}) =>
 }
 </Mutation>
 
-const DetailAdd = ({id}) =>
+const DetailAdd = ({id, onCancel}) =>
   <Mutation mutation={MUTATION_ADD_PROJECT_DETAIL} refetchQueries={refetchSpecific(id)}>
     {addProjectDetail => 
       <FormDetail
@@ -80,6 +80,7 @@ const DetailAdd = ({id}) =>
               console.log('result', result)
               setSubmitting(false)
               resetForm()
+              onCancel()
               // history.push(`/admin/project/${result.id}`)
             }
             else {
@@ -88,19 +89,33 @@ const DetailAdd = ({id}) =>
             }
           })
         }}
-        onCancel={() => {}}
+        onCancel={onCancel}
         />
     }
   </Mutation>
+
+const DetailAddListItem = ({id, toggle}) =>
+  <List.Item>
+    <DetailAdd id={id} onCancel={toggle}/>
+  </List.Item>
+
+const DetailAddButton = ({onClick}) =>
+    <Button fluid icon labelPosition='left' onClick={onClick}>
+      <Icon name='plus'/>
+      add a thing
+    </Button>
+
+const DetailAddToggle = ({id}) =>
+  <Toggle initialValues={false}>
+    {({toggle, on}) => on ? <DetailAddListItem id={id} toggle={toggle} /> : <DetailAddButton onClick={toggle}/> }
+  </Toggle>
 
 const Details = ({id, details}) =>
   <div>
     <h3>What are they looking for?</h3>
     <List divided verticalAlign='middle' size='large'>
       { details.map(d => <DetailItem key={d.id} projectId={id} detail={d} />) }
-      <List.Item>
-        <DetailAdd id={id} />
-      </List.Item>
+      <DetailAddToggle id={id}/>
     </List>
   </div>
 

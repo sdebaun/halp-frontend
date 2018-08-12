@@ -29,6 +29,8 @@ export const QUERY_ACTIVE_PROJECTS = gql`
       needStart
       needEnd
       sentPersonsNeeded
+      sentPersonsScore
+      sentPersonsCount
       sentPersonCounts {
         sent
         confirmed
@@ -47,8 +49,10 @@ export const QUERY_ACTIVE_PROJECTS_DETAILED = gql`
       pitch
       needStart
       needEnd
-      sentPersonsNeeded
       contactMethod
+      sentPersonsNeeded
+      sentPersonsScore
+      sentPersonsCount
       sentPersonCounts {
         sent
         confirmed
@@ -89,6 +93,8 @@ export const QUERY_GET_PROJECT = gql`
         text
       }
       sentPersonsNeeded
+      sentPersonsScore
+      sentPersonsCount
       sentPersons {
         sent {
           id
