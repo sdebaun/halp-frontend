@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import {
   Panel

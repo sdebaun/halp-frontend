@@ -19,7 +19,6 @@ const AdminCard = ({item: project}) =>
     <Card.Content>
       <Card.Meta style={{paddingBottom: '0.5rem'}}>{project.sourceGroup}</Card.Meta>
       <Card.Header>{project.title}</Card.Header>
-      <Card.Description>{project.pitch}</Card.Description>
       <TimeRange needStart={project.needStart} needEnd={project.needEnd} />
       <PeopleStats {...project} />
     </Card.Content>

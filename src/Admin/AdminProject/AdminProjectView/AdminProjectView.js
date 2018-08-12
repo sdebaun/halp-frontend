@@ -1,17 +1,7 @@
 import React from 'react';
-import {
-  MUTATION_ADD_PROJECT_DETAIL,
-  MUTATION_DELETE_PROJECT_DETAIL,
-  MUTATION_UPDATE_PROJECT_DETAIL,
-  MUTATION_ADD_PROJECT_SENTPERSON,
-  MUTATION_DELETE_PROJECT_SENTPERSON,
-  MUTATION_UPDATE_PROJECT_SENTPERSON,
-  refetchSpecific
-} from '../../../api/projects';
 
 import {
   Grid,
-  Segment,
 } from 'semantic-ui-react';
 
 import AdminProjectTitle from '../AdminProjectTitle';

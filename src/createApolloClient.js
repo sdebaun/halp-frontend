@@ -3,7 +3,7 @@ import { ApolloLink } from 'apollo-client-preset';
 import gql from 'graphql-tag';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
-import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch'; // eslint-disable-line no-unused-vars
 import { createHttpLink } from 'apollo-link-http';
 // import uuid from 'uuid/v1';
 const uuid = require('uuid/v1');

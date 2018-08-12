@@ -3,11 +3,12 @@ import React from 'react';
 import {
   Statistic,
   Icon,
+  List,
 } from 'semantic-ui-react';
 
 import { colorByPercent } from '../ui'
 
-const PeopleStats = ({size='mini', sentPersonsNeeded, sentPersonCounts: {sent, confirmed, noshow}}) =>
+const PeopleStats = ({size='small', sentPersonsNeeded, sentPersonCounts: {sent, confirmed, noshow}}) =>
 <Statistic.Group widths="three" size={size}>
   <Statistic>
     <Statistic.Value><Icon name='users'/> {sentPersonsNeeded}</Statistic.Value>
@@ -18,8 +19,11 @@ const PeopleStats = ({size='mini', sentPersonsNeeded, sentPersonCounts: {sent, c
     <Statistic.Label>Sent</Statistic.Label>
   </Statistic>
   <Statistic color={colorByPercent(confirmed / sentPersonsNeeded)} >
-    <Statistic.Value><Icon name='checkmark box'/> {confirmed}</Statistic.Value>
-    <Statistic.Label>Confirm</Statistic.Label>
+    <List>
+      <List.Item icon='star half outline' content={`${noshow} maybe`} style={{color: 'black'}}/>
+      <List.Item icon='star half' content={`${sent} probably`} style={{color: 'black'}}/>
+      <List.Item icon='star' content={`${confirmed} made it`} style={{color: 'black'}}/>
+    </List>
   </Statistic>
 </Statistic.Group>
 

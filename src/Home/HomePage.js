@@ -9,7 +9,6 @@ import {
 import { Helmet } from 'react-helmet';
 import { LeftMenuLayout, ResponsiveSwitcher } from '../layouts';
 
-import HomeCards from './HomeCards';
 import HomeProject from './HomeProject';
 import HomeCarousel from './HomeCarousel';
 

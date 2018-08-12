@@ -5,16 +5,12 @@ import {
   Segment,
   List,
   Icon,
-  Step,
 } from 'semantic-ui-react';
 import Slider from 'react-slick';
 import { Query } from 'react-apollo';
 import { QUERY_ACTIVE_PROJECTS_DETAILED } from '../api/projects';
 import moment from 'moment';
 import Moment from 'react-moment';
-
-// import TimeRange from '../components/TimeRange';
-import PeopleStats from '../components/PeopleStats';
 
 const fulfilledScore = ({sent, confirmed, noshow}) =>
   (sent * 0.5) + (confirmed * 1) + (noshow * 0.25)
@@ -55,7 +51,7 @@ const TimeRange = ({needStart, needEnd}) =>
   </Header>
 
 const DetailItem = ({detail: {text}}) =>
-  <List.Item>
+  <List.Item style={{padding: '1.5rem'}}>
     <Icon name='checkmark'/>
     <List.Content>{text}</List.Content>
   </List.Item>
@@ -87,32 +83,10 @@ const DeliverySchedule = ({needStart}) =>
     Schedule your time to HALP
   </DeliveryCTA>
 
-// const DeliverySchedule = ({needStart}) =>
-//   <Header as='h2' style={{fontWeight: 200}}>
-//     <Icon name='calendar check outline'/>
-//     <Header.Content>
-//       Schedule your time to HALP!<br/>
-//       <span style={{fontWeight: 800, fontSize: '3rem'}}>
-//       { moment.now() > moment(needStart) ? 'RIGHT MEOW' : <Moment fromNow>{needStart}</Moment>}
-//       </span>
-//     </Header.Content>
-//   </Header>
-
 const DeliveryWalkup = ({needStart}) =>
   <DeliveryCTA needStart={needStart} icon='child'>
     Walk up and HALP
   </DeliveryCTA>
-
-// const DeliveryWalkup = ({needStart}) =>
-//   <Header as='h2' style={{fontWeight: 200}}>
-//     <Icon name='calendar check outline'/>
-//     <Header.Content>
-//       Walk Up and HALP!<br/>
-//       <span style={{fontWeight: 800, fontSize: '3rem'}}>
-//       { moment.now() > moment(needStart) ? 'RIGHT MEOW' : <Moment fromNow>{needStart}</Moment>}
-//       </span>
-//     </Header.Content>
-//   </Header>
 
 const colorForTiming = ({needStart}) =>
   moment(needStart) < moment.now() ? 'orange' : 'yellow'
@@ -134,7 +108,7 @@ const HomeSlide = ({project}) =>
       </Grid.Column>
       <Grid.Column>
         <Segment inverted color={colorForTiming(project)} style={{padding: '2rem'}}>
-          {project.contactMethod == 'SCHEDULE' ? <DeliverySchedule {...project}/> : <DeliveryWalkup {...project}/>}
+          {project.contactMethod === 'SCHEDULE' ? <DeliverySchedule {...project}/> : <DeliveryWalkup {...project}/>}
         </Segment>
         <Segment basic style={{padding: '2rem', paddingBottom: '4rem', backgroundColor: '#EEE'}}>
           <TimeRange {...project} />
@@ -153,7 +127,6 @@ const HomeSlide = ({project}) =>
   </Grid>
 
 const SETTINGS = {
-    // adaptiveHeight: true,
     autoplay: true,
     autoplaySpeed: 12000,
     infinite: true,

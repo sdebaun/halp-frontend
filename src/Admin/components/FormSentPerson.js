@@ -12,7 +12,7 @@ import { FieldInputText } from '../../fields'
 const schema = object().shape({
   name: string()
     .max(80, 'Do they really need a name larger than 80 letters?')
-    .required('What\s their playa name?'),
+    .required('What\'s their playa name?'),
   email: string()
     .email()
 })

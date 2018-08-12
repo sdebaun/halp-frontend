@@ -4,7 +4,6 @@ import {
   Icon,
   Panel,
 } from '../ui';
-import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
 import FormProject from './components/FormProject';

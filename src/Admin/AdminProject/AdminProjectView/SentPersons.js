@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Mutation } from 'react-apollo';
 import {
   MUTATION_ADD_PROJECT_SENTPERSON,
@@ -82,17 +82,17 @@ const SentPersonAdd = ({id}) =>
 </Mutation>
 
 const propsForState = state => {
-  if (state == 'sent') return {
+  if (state === 'sent') return {
     name: 'play circle',
     color: 'yellow',
     emptyTextForState: 'Nobody has been sent to help.'
   }
-  if (state == 'confirmed') return {
+  if (state === 'confirmed') return {
     name: 'checkmark box',
     color: 'green',
     emptyTextForState: 'Nobody has been confirmed as arriving.'
   }
-  if (state == 'all') return {
+  if (state === 'all') return {
     emptyTextForState: 'Nobody has been sent, confirmed, or failed to confirm.'
   }
   return {
@@ -115,13 +115,13 @@ const SentPersonItem = ({projectId, stateProps, sentPerson: {id, name, email, st
   </List.Item>
 
 const logProp = (Component, propName) => props => {
-  console.log('prop', propName, props[propName])
+  // console.log('prop', propName, props[propName])
   return <Component {...props}/>
 }
 
 const _SentPersonsList = ({id, sentPersons, stateProps}) =>
   <List divided verticalAlign='middle' size='large'>
-    { sentPersons.length == 0 && <List.Item>{stateProps.emptyTextForState}</List.Item> }
+    { sentPersons.length === 0 && <List.Item>{stateProps.emptyTextForState}</List.Item> }
     { sentPersons.map(p => <SentPersonItem stateProps={stateProps} key={p.id} projectId={id} sentPerson={p}/>)}
     <List.Item>
       <SentPersonAdd id={id}/>
@@ -130,23 +130,16 @@ const _SentPersonsList = ({id, sentPersons, stateProps}) =>
 
 const SentPersonsList = logProp(_SentPersonsList, 'sentState')
 
-// const SentPersonsFilter = ({filter, setState}) =>
-//   <div>
-//     <Button onClick={()=>setState({filter: 'sent'})}>sent</Button>
-//     <Button onClick={()=>setState({filter: 'confirmed'})}>confirmed</Button>
-//     <Button onClick={()=>setState({filter: 'noshow'})}>noshow</Button>
-//   </div>
-
 const SentPersonsFilter = ({filter, setState}) =>
   <Menu pointing secondary>
-    <Menu.Item active={filter=='sent'} onClick={()=>setState({filter: 'sent'})}>sent</Menu.Item>
-    <Menu.Item active={filter=='confirmed'} onClick={()=>setState({filter: 'confirmed'})}>confirmed</Menu.Item>
-    <Menu.Item active={filter=='noshow'} onClick={()=>setState({filter: 'noshow'})}>noshow</Menu.Item>
-    <Menu.Item active={filter=='all'} onClick={()=>setState({filter: 'all'})}>all</Menu.Item>
+    <Menu.Item active={filter==='sent'} onClick={()=>setState({filter: 'sent'})}>sent</Menu.Item>
+    <Menu.Item active={filter==='confirmed'} onClick={()=>setState({filter: 'confirmed'})}>confirmed</Menu.Item>
+    <Menu.Item active={filter==='noshow'} onClick={()=>setState({filter: 'noshow'})}>noshow</Menu.Item>
+    <Menu.Item active={filter==='all'} onClick={()=>setState({filter: 'all'})}>all</Menu.Item>
   </Menu>
 
 const sentByFilter = (sentPersons, filter) => {
-  if (filter == 'all') return [...sentPersons['sent'], ...sentPersons['confirmed'], ...sentPersons['noshow']]
+  if (filter === 'all') return [...sentPersons['sent'], ...sentPersons['confirmed'], ...sentPersons['noshow']]
   return sentPersons[filter]
 }
 

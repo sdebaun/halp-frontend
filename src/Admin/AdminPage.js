@@ -10,7 +10,6 @@ import {
 import { Helmet } from 'react-helmet';
 import { LeftMenuLayout, DrawerMenuLayout, ResponsiveSwitcher } from '../layouts';
 
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
 import AdminList from './AdminList';
