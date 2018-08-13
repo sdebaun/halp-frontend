@@ -39,7 +39,26 @@ export const QUERY_ACTIVE_PROJECTS = gql`
     }
   }
 `
-
+export const QUERY_PROJECTS_BY_STATE = gql`
+  query projectsByState($state: String!) {
+    projectsByState(state: $state) {
+      id
+      title
+      sourceGroup
+      pitch
+      needStart
+      needEnd
+      sentPersonsNeeded
+      sentPersonsScore
+      sentPersonsCount
+      sentPersonCounts {
+        sent
+        confirmed
+        noshow
+      }
+    }
+  }
+`
 export const QUERY_ACTIVE_PROJECTS_DETAILED = gql`
   query projectsActiveDetailed {
     projectsActive {

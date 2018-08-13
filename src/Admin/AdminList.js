@@ -8,7 +8,7 @@ import {
 } from '../ui';
 import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
-import { QUERY_ACTIVE_PROJECTS } from '../api/projects'
+import { QUERY_PROJECTS_BY_STATE } from '../api/projects'
 import { Query } from 'react-apollo'
 import PeopleStats from '../components/PeopleStats';
 import TimeRange from '../components/TimeRange';
@@ -24,14 +24,14 @@ const AdminCard = ({item: project}) =>
     </Card.Content>
   </Card>
 
-const AdminList = ({cols}) =>
-  <Query query={QUERY_ACTIVE_PROJECTS}>
-    {({ loading, data: { projectsActive } }) => {
+const AdminList = ({cols, filterState}) =>
+  <Query query={QUERY_PROJECTS_BY_STATE} variables={{state: filterState || 'active'}}>
+    {({ loading, data: { projectsByState } }) => {
       if (loading) { return <div>LOADING...</div> }
       return <ResponsiveSwitcher
-        mobile={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={1}>{cardsFrom(AdminCard, projectsActive)}</CardGroup>}
-        tablet={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={2}>{cardsFrom(AdminCard, projectsActive)}</CardGroup>}
-        computer={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={3}>{cardsFrom(AdminCard, projectsActive)}</CardGroup>}
+        mobile={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={1}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
+        tablet={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={2}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
+        computer={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={3}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
         />
     }}
   </Query>

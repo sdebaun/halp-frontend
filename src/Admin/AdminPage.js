@@ -41,13 +41,13 @@ const AdminHelmet = () =>
 const AdminContent = () =>
   <div>
     <Route path='/admin' exact render={() =>
-      <AdminList />
+      <AdminList filterState='active' />
       } />
     <Route path='/admin/closed' exact render={() =>
-      <AdminList />
+      <AdminList filterState='closed'/>
       } />
     <Route path='/admin/old' exact render={() =>
-      <AdminList />
+      <AdminList filterState='old'/>
       } />
     <Route path='/admin/add' exact render={() =>
       <AdminAddProject />
