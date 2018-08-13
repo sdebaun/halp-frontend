@@ -16,7 +16,7 @@ import Details from './Details';
 import moment from 'moment';
 import Moment from 'react-moment';
 
-const DeliveryInfo = ({needStart, children, icon}) =>
+const DeliveryInfo = ({needStart, contactName, contactAddress, children, icon}) =>
   <Header as='h2' style={{fontWeight: 200}} inverted>
     <Icon name={icon}/>
     <Header.Content>
@@ -24,17 +24,17 @@ const DeliveryInfo = ({needStart, children, icon}) =>
       { moment.now() > moment(needStart) ? 'RIGHT MEOW' : <Moment fromNow>{needStart}</Moment>}
       </span>
       <br/>
-      with <span style={{fontWeight: 800}}>Bob</span> at <span style={{fontWeight: 800}}>4 & E</span>
+      <span style={{fontWeight: 800}}>{contactName}</span> at <span style={{fontWeight: 800}}>{contactAddress}</span>
     </Header.Content>
   </Header>
 
-const DeliverySchedule = ({needStart}) =>
-  <DeliveryInfo needStart={needStart} icon='calendar check outline'>
+const DeliverySchedule = props =>
+  <DeliveryInfo {...props} icon='calendar check outline'>
     Schedule Someone
   </DeliveryInfo>
 
-const DeliveryWalkup = ({needStart}) =>
-  <DeliveryInfo needStart={needStart} icon='child'>
+const DeliveryWalkup = props =>
+  <DeliveryInfo {...props} icon='child'>
     Send Walkups
   </DeliveryInfo>
 
@@ -48,9 +48,6 @@ const AdminProjectView = ({project}) =>
       <Grid.Row columns={2}>
         <Grid.Column>
           <Segment basic>
-            <TimeRange {...project} />
-          </Segment>
-          <Segment basic>
             <p style={{fontSize: '1.5rem', fontWeight: 200}}>{project.pitch}</p>
           </Segment>
           <Segment basic>
@@ -58,6 +55,9 @@ const AdminProjectView = ({project}) =>
           </Segment>
         </Grid.Column>
         <Grid.Column>
+        <Segment basic>
+            <TimeRange {...project} />
+          </Segment>
           <Segment basic>
           <PeopleStats size='small' {...project} />
           </Segment>

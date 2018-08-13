@@ -107,11 +107,11 @@ const HomeSlide = ({project}) =>
         </Segment>
       </Grid.Column>
       <Grid.Column>
-        <Segment inverted color={colorForTiming(project)} style={{padding: '2rem'}}>
-          {project.contactMethod === 'SCHEDULE' ? <DeliverySchedule {...project}/> : <DeliveryWalkup {...project}/>}
-        </Segment>
         <Segment basic style={{padding: '2rem', paddingBottom: '4rem', backgroundColor: '#EEE'}}>
           <TimeRange {...project} />
+        </Segment>
+        <Segment inverted color={colorForTiming(project)} style={{padding: '2rem'}}>
+          {project.contactMethod === 'SCHEDULE' ? <DeliverySchedule {...project}/> : <DeliveryWalkup {...project}/>}
         </Segment>
         <Segment basic>
           <NeededCTA {...project} />
