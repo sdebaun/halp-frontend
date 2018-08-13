@@ -5,7 +5,6 @@ import {
   CardGroup,
   Progress,
   colorByPercent,
-  colorByScore,
 } from '../ui';
 import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 

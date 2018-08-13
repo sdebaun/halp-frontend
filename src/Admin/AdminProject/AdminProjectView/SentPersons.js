@@ -9,7 +9,6 @@ import {
 
 import {
   Icon,
-  Header,
   List,
   Menu,
   Dropdown,
@@ -17,7 +16,6 @@ import {
 
 import { State } from 'react-powerplug'
 
-import moment from 'moment';
 import Moment from 'react-moment';
 
 import FormSentPerson from '../../components/FormSentPerson';

@@ -1,23 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  Icon,
-  Panel,
-  Header,
-} from '../ui';
 import { Mutation } from 'react-apollo';
 
 import FormProject from './components/FormProject';
-import { PageTitle } from '../layouts';
 import { MUTATION_CREATE_PROJECT, refetchAll } from '../api/projects'
 import { QuickNav } from './AdminProject/AdminProjectTitle'
 import moment from 'moment';
-
-const Title = ({project}) =>
-  <PageTitle
-    left={<Icon name='angle left' />}
-    middle='Add Project'
-    />
 
 const PROJECT_INITIAL_VALUES = {
   title: '',
