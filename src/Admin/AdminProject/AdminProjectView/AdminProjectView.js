@@ -7,7 +7,7 @@ import {
   Icon,
 } from 'semantic-ui-react';
 
-import AdminProjectTitle from '../AdminProjectTitle';
+import AdminProjectTitle, {AdminProjectNav} from '../AdminProjectTitle';
 import TimeRange from '../../../components/TimeRange';
 import PeopleStats from '../../../components/PeopleStats';
 import SentPersons, { SentPersonAdd } from './SentPersons';
@@ -39,14 +39,15 @@ const DeliveryWalkup = props =>
   </DeliveryInfo>
 
 const colorForTiming = ({needStart}) =>
-  moment(needStart) < moment.now() ? 'orange' : 'yellow'
+  moment(needStart) < moment.now() ? 'orange' : 'grey'
 
 const AdminProjectView = ({project}) =>
   <div>
-    <AdminProjectTitle project={project} linkTo='/admin' />
+    <AdminProjectNav project={project} linkTo='/admin'/>
     <Grid stackable>
       <Grid.Row columns={2}>
         <Grid.Column>
+          <AdminProjectTitle project={project} linkTo='/admin' />
           <Segment basic>
             <p style={{fontSize: '1.5rem', fontWeight: 200}}>{project.pitch}</p>
           </Segment>

@@ -3,12 +3,15 @@ import { withRouter } from 'react-router-dom';
 import {
   Icon,
   Panel,
+  Header,
 } from '../ui';
 import { Mutation } from 'react-apollo';
 
 import FormProject from './components/FormProject';
 import { PageTitle } from '../layouts';
 import { MUTATION_CREATE_PROJECT, refetchAll } from '../api/projects'
+import { QuickNav } from './AdminProject/AdminProjectTitle'
+import moment from 'moment';
 
 const Title = ({project}) =>
   <PageTitle
@@ -28,11 +31,17 @@ const PROJECT_INITIAL_VALUES = {
   sentPersonsNeeded: '',
 }
 
+const initialValues = () => ({
+  ...PROJECT_INITIAL_VALUES,
+  needStart: moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
+  needEnd: moment().add(1,'h').format(moment.HTML5_FMT.DATETIME_LOCAL),
+})
+
 const _FormProjectAdd = ({history}) =>
   <Mutation mutation={MUTATION_CREATE_PROJECT} refetchQueries={refetchAll}>
     {createProject =>
       <FormProject
-        initialValues={PROJECT_INITIAL_VALUES}
+        initialValues={initialValues()}
         okLabel={'Create'}
         cancelLabel={'Back'}
         onSubmit={(values, {setSubmitting, setErrors}) => {
@@ -50,18 +59,17 @@ const _FormProjectAdd = ({history}) =>
           })
         }}
         onCancel={history.goBack}
-        />
+        >
+        </FormProject>
     }
   </Mutation>
 
 const FormProjectAdd = withRouter(_FormProjectAdd)
 
 const AdminAddProject = ({id}) =>
-  <div>
-    <Title />
-    <Panel>
-    <FormProjectAdd />
-    </Panel>
-  </div>
+<div>
+  <QuickNav><span style={{color: '#999'}}>ADDING PROJECT</span></QuickNav>
+  <FormProjectAdd/>
+</div>
 
 export default AdminAddProject

@@ -17,6 +17,7 @@ import {
 
 import { State } from 'react-powerplug'
 
+import moment from 'moment';
 import Moment from 'react-moment';
 
 import FormSentPerson from '../../components/FormSentPerson';
@@ -133,7 +134,7 @@ const SentPersonsList = logProp(_SentPersonsList, 'sentState')
 const SentPersonsFilter = ({filter, setState}) =>
   <Menu pointing secondary>
     <Menu.Item active={filter==='sent'} onClick={()=>setState({filter: 'sent'})}>
-      <Icon name='star half outline' color='yellow'/>
+      {/* <Icon name='star half outline' color='yellow'/> */}
       <Icon name='star outline' color='yellow'/>
       on the way
     </Menu.Item>
@@ -142,9 +143,9 @@ const SentPersonsFilter = ({filter, setState}) =>
       made it
     </Menu.Item>
     <Menu.Item active={filter==='all'} onClick={()=>setState({filter: 'all'})}>
-      <Icon name='star half outline' color='yellow'/>
-      <Icon name='star outline' color='yellow'/>
-      <Icon name='star' color='green'/>
+      {/* <Icon name='star half outline' color='yellow'/> */}
+      {/* <Icon name='star outline' color='yellow'/> */}
+      {/* <Icon name='star' color='green'/> */}
       all
     </Menu.Item>
   </Menu>

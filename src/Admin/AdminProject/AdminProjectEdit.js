@@ -3,11 +3,13 @@ import { withRouter } from 'react-router-dom';
 
 import { Mutation } from 'react-apollo';
 import {
-  Panel
-} from '../../ui';
+  Grid,
+  Segment,
+  Header,
+} from 'semantic-ui-react';
 
 import FormProject from '../components/FormProject'
-import AdminProjectTitle from './AdminProjectTitle';
+import AdminProjectTitle, {QuickNav} from './AdminProjectTitle';
 import {
   MUTATION_UPDATE_PROJECT,
   refetchSpecific
@@ -35,18 +37,37 @@ const _FormProjectUpdate = ({history, project}) =>
           })
         }}
         onCancel={history.goBack}
-        />
+        >
+        </FormProject>
     }
   </Mutation>
 
 const FormProjectUpdate = withRouter(_FormProjectUpdate)
 
+// const AdminProjectEdit = ({project}) =>
+//   <div>
+//     <AdminProjectTitle project={project} />
+//     <Panel>
+//     <FormProjectUpdate project={project}/>
+//     </Panel>
+//   </div>
+
 const AdminProjectEdit = ({project}) =>
-  <div>
-    <AdminProjectTitle project={project} />
-    <Panel>
-    <FormProjectUpdate project={project}/>
-    </Panel>
-  </div>
+<div>
+<QuickNav><span style={{color: '#999'}}>EDITING</span></QuickNav>
+  <FormProjectUpdate project={project}/>
+</div>
+
+// const AdminProjectEdit = ({project}) =>
+// <div>
+// <Grid stackable>
+// <Grid.Row columns={1}>
+//   <Grid.Column>
+//     <QuickNav project={project}/>
+//   </Grid.Column>
+// </Grid.Row>
+// </Grid>
+// <FormProjectUpdate project={project}/>
+// </div>
 
 export default AdminProjectEdit

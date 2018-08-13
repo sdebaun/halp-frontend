@@ -22,6 +22,9 @@ export const FieldInputText = props =>
 export const FieldInputDateTime = props =>
   <FormikField type='datetime-local' Klass={Form.Input} {...props} />
 
+export const FieldInputTextArea = props =>
+  <FormikField Klass={Form.TextArea} {...props} />
+
 export const FieldSelect = ({Klass, formik: {handleBlur, handleChange, setFieldValue, setFieldTouched, ...formik}, ...props}) =>
   <FormikField Klass={Dropdown} selection {...props} formik={{
     handleChange: (e,{value}) => setFieldValue(props.name, value),

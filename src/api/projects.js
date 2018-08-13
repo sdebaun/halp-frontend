@@ -101,18 +101,21 @@ export const QUERY_GET_PROJECT = gql`
           name
           email
           state
+          createdAt
         }
         confirmed {
           id
           name
           email
           state
+          createdAt
         }
         noshow {
           id
           name
           email
           state
+          createdAt
         }
       }
       sentPersonCounts {

@@ -43,10 +43,23 @@ const _DropdownItemCopy = ({project, history}) =>
 const DropdownItemDelete = withRouter(_DropdownItemDelete)
 const DropdownItemCopy = withRouter(_DropdownItemCopy)
 
+// const AdminProjectMenu = ({project}) =>
+//   <Menu text style={{minHeight: 0, padding: 0, paddingRight: '12px', margin: 0}}>
+//     <Menu.Menu position='right'>
+//       <Dropdown icon='ellipsis vertical'>
+//         <Dropdown.Menu>
+//           <Dropdown.Item as={Link} to={`/admin/project/${project.id}/edit`} icon='edit' text='edit' />
+//           <Dropdown.Item icon='close' text='close' />
+//           <DropdownItemCopy project={project}/>
+//           <DropdownItemDelete project={project}/>
+//         </Dropdown.Menu>
+//       </Dropdown>
+//     </Menu.Menu>
+//   </Menu>
+
 const AdminProjectMenu = ({project}) =>
-  <Menu text style={{minHeight: 0, padding: 0, paddingRight: '12px', margin: 0}}>
-    <Menu.Menu position='right'>
-      <Dropdown icon='ellipsis vertical'>
+    <Menu.Menu>
+      <Dropdown text='OPTIONS' icon='caret down'>
         <Dropdown.Menu>
           <Dropdown.Item as={Link} to={`/admin/project/${project.id}/edit`} icon='edit' text='edit' />
           <Dropdown.Item icon='close' text='close' />
@@ -55,6 +68,5 @@ const AdminProjectMenu = ({project}) =>
         </Dropdown.Menu>
       </Dropdown>
     </Menu.Menu>
-  </Menu>
 
 export default AdminProjectMenu;
