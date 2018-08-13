@@ -8,6 +8,12 @@ import {
 
 import { colorByPercent } from '../ui'
 
+export const SentCountListItem = ({icon, color, content}) =>
+  <List.Item>
+    <List.Icon name={icon} color={color}/>
+    <List.Content>{content}</List.Content>
+  </List.Item>
+
 const PeopleStats = ({size='small', sentPersonsNeeded, sentPersonsScore, sentPersonCounts: {sent, confirmed, noshow}}) =>
 <Statistic.Group widths="three" size={size}>
   <Statistic>
@@ -20,11 +26,13 @@ const PeopleStats = ({size='small', sentPersonsNeeded, sentPersonsScore, sentPer
   </Statistic>
   <Statistic color={colorByPercent(confirmed / sentPersonsNeeded)} >
     <List>
-      <List.Item icon='star half outline' content={`${noshow} maybe`} style={{color: 'black'}}/>
-      <List.Item icon='star half' content={`${sent} probably`} style={{color: 'black'}}/>
-      <List.Item icon='star' content={`${confirmed} made it`} style={{color: 'black'}}/>
+      <SentCountListItem icon='star half outline' color='yellow' content={`${noshow} maybe`}/>
+      <SentCountListItem icon='star outline' color='yellow' content={`${sent} probably`}/>
+      <SentCountListItem icon='star' color='green' content={`${confirmed} made it`}/>
     </List>
   </Statistic>
 </Statistic.Group>
 
 export default PeopleStats
+
+

@@ -34,8 +34,8 @@ const FormDetail = ({initialValues, onSubmit, onCancel, okLabel, cancelLabel}) =
         <br/>
         <Form.Group inline>
           <label>They Going To Show Up?</label>
-          <FieldRadio name='state' label='Maybe' value='noshow' formik={formik}/>
-          <FieldRadio name='state' label='Probably' value='sent' formik={formik}/>
+          <FieldRadio name='state' label='Maybe' value='noshow' formik={formik} style={{fontSize: '1.25rem'}}/>
+          <FieldRadio name='state' label='Probably' value='sent' formik={formik} style={{fontSize: '1.25rem'}}/>
         </Form.Group>
   
         <FieldInputText name='email' formik={formik}
