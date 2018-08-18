@@ -63,14 +63,14 @@ function createApolloClient({ ssrMode }) {
     fetch,
   })
 
-  const wsLink = new WebSocketLink({
+  const wsLink = ssrMode ? null : new WebSocketLink({
     uri: 'ws://localhost:4000/graphql',
     options: {
       reconnect: true
     }
   })
 
-  const networkLink = split(
+  const networkLink = ssrMode ? httpLink : split(
     ({query}) => {
       const {kind, operation} = getMainDefinition(query)
       return kind === 'OperationDefinition' && operation === 'subscription'
