@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 export const refetchAll = [
   'projectsActive',
   'projectCounts',
+  'projectsByState',
   'getProject'
 ]
 

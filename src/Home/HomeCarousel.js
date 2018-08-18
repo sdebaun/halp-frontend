@@ -43,7 +43,7 @@ const TimeRange = ({needStart, needEnd}) =>
     until
     </Header.Subheader>
     <Header.Content>
-      <Header.Subheader>
+      <Header.Subheader style={{fontSize: '2.5rem', lineHeight: '5rem'}}>
         {!isSameDay(needStart, needEnd) ? <Moment format='ddd D MMM' date={needEnd}/> : ''}
       </Header.Subheader>
       <Moment format='h:mm a' date={needEnd} style={{fontSize: '4rem'}}/>
