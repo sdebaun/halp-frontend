@@ -9,7 +9,13 @@ import {
 } from '../ui';
 import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
-import { QUERY_PROJECTS_BY_STATE, SUBSCRIPTION_PROJECT_CHANGED } from '../api/projects'
+import {
+  QUERY_PROJECTS_BY_STATE,
+  SUBSCRIPTION_PROJECT_CHANGED,
+  SUBSCRIPTION_PROJECT_ADDED,
+  SUBSCRIPTION_PROJECT_DELETED,
+} from '../api/projects'
+
 import { Query } from 'react-apollo'
 import PeopleStats from '../components/PeopleStats';
 import TimeRange from '../components/TimeRange';
@@ -52,6 +58,14 @@ const replace = (arr, item) => {
   return arr
 }
 
+const del = (arr, id) => {
+  const matchIndex = _.find(arr, {id})
+  if (matchIndex >= 0) {
+    arr.splice(matchIndex, 1)
+  }
+  return arr
+}
+
 const AdminList = ({cols, filterState}) =>
   <Query query={QUERY_PROJECTS_BY_STATE} variables={{state: filterState || 'active'}}>
     {({ loading, data: { projectsByState }, subscribeToMore }) => {
@@ -59,14 +73,36 @@ const AdminList = ({cols, filterState}) =>
         subscribeToMore({
           document: SUBSCRIPTION_PROJECT_CHANGED,
           updateQuery: (prev, { subscriptionData }) => {
-            // console.log('subscription prev', prev)
-            // console.log('subscription data', subscriptionData)
             const { projectChanged } = subscriptionData.data
             const projects = prev.projectsByState
             console.log('original projects', projects)
             console.log('changed project', projectChanged)
             return {
               projectsByState: replace(projects, projectChanged),
+            }
+          }
+        })
+        subscribeToMore({
+          document: SUBSCRIPTION_PROJECT_ADDED,
+          updateQuery: (prev, { subscriptionData }) => {
+            const { projectAdded } = subscriptionData.data
+            const projects = prev.projectsByState
+            console.log('original projects', projects)
+            console.log('added project', projectAdded)
+            return {
+              projectsByState: projects.concat([projectAdded]),
+            }
+          }
+        })
+        subscribeToMore({
+          document: SUBSCRIPTION_PROJECT_DELETED,
+          updateQuery: (prev, { subscriptionData }) => {
+            const { projectDeleted } = subscriptionData.data
+            const projects = prev.projectsByState
+            console.log('original projects', projects)
+            console.log('deleted project', projectDeleted)
+            return {
+              projectsByState: _.filter(projects, p => p.id !== projectDeleted)
             }
           }
         })

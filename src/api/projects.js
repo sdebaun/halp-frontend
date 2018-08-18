@@ -199,6 +199,64 @@ export const SUBSCRIPTION_PROJECT_CHANGED = gql`
   }
 `
 
+export const SUBSCRIPTION_PROJECT_ADDED = gql`
+  subscription onProjectAdded {
+    projectAdded {
+      id
+      title
+      sourceGroup
+      pitch
+      needStart
+      needEnd
+      state
+      contactMethod
+      contactAddress
+      contactName
+      details {
+        id
+        text
+      }
+      sentPersonsNeeded
+      sentPersonsScore
+      sentPersonsCount
+      sentPersons {
+        sent {
+          id
+          name
+          email
+          state
+          createdAt
+        }
+        confirmed {
+          id
+          name
+          email
+          state
+          createdAt
+        }
+        noshow {
+          id
+          name
+          email
+          state
+          createdAt
+        }
+      }
+      sentPersonCounts {
+        sent
+        confirmed
+        noshow
+      }
+    }
+  }
+`
+
+export const SUBSCRIPTION_PROJECT_DELETED = gql`
+  subscription onProjectDeleted {
+    projectDeleted
+  }
+`
+
 export const MUTATION_CREATE_PROJECT = gql`
   mutation createProject(
     $title: String!,
