@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -8,7 +9,7 @@ import {
 } from '../ui';
 import { ResponsiveSwitcher, cardsFrom } from '../layouts';
 
-import { QUERY_PROJECTS_BY_STATE } from '../api/projects'
+import { QUERY_PROJECTS_BY_STATE, SUBSCRIPTION_PROJECT_CHANGED } from '../api/projects'
 import { Query } from 'react-apollo'
 import PeopleStats from '../components/PeopleStats';
 import TimeRange from '../components/TimeRange';
@@ -24,15 +25,53 @@ const AdminCard = ({item: project}) =>
     </Card.Content>
   </Card>
 
+const AdminListStateless = ({loading, projectsByState}) =>
+  loading ?
+  <div>LOADING...</div> :
+  <ResponsiveSwitcher
+    mobile={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={1}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
+    tablet={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={2}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
+    computer={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={3}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
+    />
+
+class AdminListComponent extends Component {
+  componentDidMount() {
+    this.props.startSubscriptions()
+  }
+
+  render() {
+    return <AdminListStateless {...this.props} />
+  }
+}
+
+const replace = (arr, item) => {
+  const matchIndex = _.find(arr, {id: item.id})
+  if (matchIndex >= 0) {
+    arr.splice(matchIndex, 1, item)
+  }
+  return arr
+}
+
 const AdminList = ({cols, filterState}) =>
   <Query query={QUERY_PROJECTS_BY_STATE} variables={{state: filterState || 'active'}}>
-    {({ loading, data: { projectsByState } }) => {
-      if (loading) { return <div>LOADING...</div> }
-      return <ResponsiveSwitcher
-        mobile={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={1}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
-        tablet={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={2}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
-        computer={<CardGroup style={{paddingTop: '1rem'}} itemsPerRow={3}>{cardsFrom(AdminCard, projectsByState)}</CardGroup>}
-        />
+    {({ loading, data: { projectsByState }, subscribeToMore }) => {
+      const startSubscriptions = () => {
+        subscribeToMore({
+          document: SUBSCRIPTION_PROJECT_CHANGED,
+          updateQuery: (prev, { subscriptionData }) => {
+            // console.log('subscription prev', prev)
+            // console.log('subscription data', subscriptionData)
+            const { projectChanged } = subscriptionData.data
+            const projects = prev.projectsByState
+            console.log('original projects', projects)
+            console.log('changed project', projectChanged)
+            return {
+              projectsByState: replace(projects, projectChanged),
+            }
+          }
+        })
+      }
+      return <AdminListComponent {...{loading, projectsByState, startSubscriptions}}/>
     }}
   </Query>
 
