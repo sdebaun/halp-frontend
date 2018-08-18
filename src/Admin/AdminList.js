@@ -58,14 +58,6 @@ const replace = (arr, item) => {
   return arr
 }
 
-const del = (arr, id) => {
-  const matchIndex = _.find(arr, {id})
-  if (matchIndex >= 0) {
-    arr.splice(matchIndex, 1)
-  }
-  return arr
-}
-
 const AdminList = ({cols, filterState}) =>
   <Query query={QUERY_PROJECTS_BY_STATE} variables={{state: filterState || 'active'}}>
     {({ loading, data: { projectsByState }, subscribeToMore }) => {

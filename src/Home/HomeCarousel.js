@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import _ from 'lodash';
 import {
   Grid,
   Header,
@@ -8,7 +9,13 @@ import {
 } from 'semantic-ui-react';
 import Slider from 'react-slick';
 import { Query } from 'react-apollo';
-import { QUERY_ACTIVE_PROJECTS_DETAILED } from '../api/projects';
+import {
+  QUERY_ACTIVE_PROJECTS_DETAILED,
+  SUBSCRIPTION_PROJECT_ADDED,
+  SUBSCRIPTION_PROJECT_CHANGED,
+  SUBSCRIPTION_PROJECT_DELETED,
+} from '../api/projects';
+
 import moment from 'moment';
 import Moment from 'react-moment';
 
@@ -136,17 +143,75 @@ const SETTINGS = {
 const Loading = () =>
   <div>Loading...</div>
 
-const HomeSlider = ({projects}) =>
-  <Slider {...SETTINGS}>
-    { projects.map(project => <HomeSlide key={project.id} project={project}/>)}
-  </Slider>
+const HomeSliderStateless = ({projects, loading}) =>
+  loading ?
+    <Loading/> :
+    <Slider {...SETTINGS}>
+      { projects.map(project => <HomeSlide key={project.id} project={project}/>)}
+    </Slider>
+
+class HomeSliderComponent extends Component {
+  componentDidMount() {
+    this.props.startSubscriptions()
+  }
+  render() {
+    return <HomeSliderStateless {...this.props} />
+  }
+}
+
+const replace = (arr, item) => {
+  const matchIndex = _.find(arr, {id: item.id})
+  if (matchIndex >= 0) {
+    arr.splice(matchIndex, 1, item)
+  }
+  return arr
+}
 
 const HomeCarousel = () =>
   <div style={{padding: '20px 40px'}}>
     <Query query={QUERY_ACTIVE_PROJECTS_DETAILED}>
-      {({ loading, data: { projectsActive } }) =>
-        loading ? <Loading/> : <HomeSlider projects={projectsActive}/>
-      }
+      {({ loading, data: { projectsActive }, subscribeToMore }) => {
+        const startSubscriptions = () => {
+          subscribeToMore({
+            document: SUBSCRIPTION_PROJECT_CHANGED,
+            updateQuery: (prev, { subscriptionData }) => {
+              const { projectChanged } = subscriptionData.data
+              const projects = prev.projectsActive
+              console.log('original projects', projects)
+              console.log('changed project', projectChanged)
+              return {
+                projectsActive: replace(projects, projectChanged),
+              }
+            }
+          })
+          subscribeToMore({
+            document: SUBSCRIPTION_PROJECT_ADDED,
+            updateQuery: (prev, { subscriptionData }) => {
+              const { projectAdded } = subscriptionData.data
+              const projects = prev.projectsActive
+              console.log('original projects', projects)
+              console.log('added project', projectAdded)
+              return {
+                projectsActive: projects.concat([projectAdded]),
+              }
+            }
+          })
+          subscribeToMore({
+            document: SUBSCRIPTION_PROJECT_DELETED,
+            updateQuery: (prev, { subscriptionData }) => {
+              const { projectDeleted } = subscriptionData.data
+              const projects = prev.projectsActive
+              console.log('original projects', projects)
+              console.log('deleted project', projectDeleted)
+              return {
+                projectsActive: _.filter(projects, p => p.id !== projectDeleted)
+              }
+            }
+          })
+        }
+        return <HomeSliderComponent {...{loading, projects: projectsActive, startSubscriptions}} />
+      }}
     </Query>
   </div>
+
 export default HomeCarousel
