@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
   Grid,
@@ -41,7 +41,7 @@ const DeliveryWalkup = props =>
 const colorForTiming = ({needStart}) =>
   moment(needStart) < moment.now() ? 'orange' : 'grey'
 
-const AdminProjectView = ({project}) =>
+const AdminProjectViewStateless = ({project}) =>
   <div>
     <AdminProjectNav project={project} linkTo='/admin'/>
     <Grid stackable>
@@ -73,6 +73,15 @@ const AdminProjectView = ({project}) =>
       </Grid.Row>
     </Grid>
   </div>
+
+class AdminProjectView extends Component {
+  componentDidMount() {
+    this.props.startSubscriptions()
+  }
+  render() {
+    return <AdminProjectViewStateless project={this.props.project}/>
+  }
+}
 
 export default AdminProjectView
 
