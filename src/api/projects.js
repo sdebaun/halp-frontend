@@ -257,6 +257,16 @@ export const SUBSCRIPTION_PROJECT_DELETED = gql`
   }
 `
 
+export const SUBSCRIPTION_PROJECTCOUNTS_CHANGED = gql`
+  subscription onProjectCountsChanged {
+    projectCountsChanged {
+      active
+      closed
+      old
+    }
+  }
+`
+
 export const MUTATION_CREATE_PROJECT = gql`
   mutation createProject(
     $title: String!,

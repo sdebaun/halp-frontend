@@ -15,7 +15,10 @@ import { Query } from 'react-apollo';
 import AdminList from './AdminList';
 import AdminProject from './AdminProject';
 import AdminAddProject from './AdminAddProject';
-import { QUERY_PROJECT_COUNTS } from '../api/projects';
+import {
+  QUERY_PROJECT_COUNTS,
+  SUBSCRIPTION_PROJECTCOUNTS_CHANGED,
+} from '../api/projects';
 
 const ButtonSignOut = () =>
   <Link to='/'>
@@ -57,6 +60,24 @@ const AdminContent = () =>
       } />
   </div>
 
+const AdminCountsStateless = ({nav, loading, projectCounts}) =>
+  loading ?
+    <div>LOADING...</div> :
+    <div>
+      <MenuItemLabelled nav={() => nav('/admin')} label='active' color='green' count={projectCounts.active} />
+      <MenuItemLabelled nav={() => nav('/admin/closed')} label='closed' color='grey' count={projectCounts.closed} />
+      <MenuItemLabelled nav={() => nav('/admin/old')} label='old' color='grey' count={projectCounts.old} />
+    </div>
+
+class AdminCountsComponent extends Component {
+  componentDidMount() {
+    this.props.startSubscriptions()
+  }
+  render() {
+    return <AdminCountsStateless {...this.props} />
+  }
+}
+
 const AdminMenu = ({nav}) =>
   <Menu inverted vertical fluid>
     <Menu.Item header>
@@ -68,13 +89,28 @@ const AdminMenu = ({nav}) =>
       <ButtonCreateProject nav={nav}/>
     </Menu.Item>
     <Query query={QUERY_PROJECT_COUNTS}>
-      {({loading, data: { projectCounts }}) => {
-        if (loading) { return <div>LOADING...</div> }
-        return <div>
-          <MenuItemLabelled nav={() => nav('/admin')} label='active' color='green' count={projectCounts.active} />
-          <MenuItemLabelled nav={() => nav('/admin/closed')} label='closed' color='grey' count={projectCounts.closed} />
-          <MenuItemLabelled nav={() => nav('/admin/old')} label='old' color='grey' count={projectCounts.old} />
-        </div>
+      {({loading, data: { projectCounts }, subscribeToMore}) => {
+        const startSubscriptions = () => {
+          subscribeToMore({
+            document: SUBSCRIPTION_PROJECTCOUNTS_CHANGED,
+            updateQuery: (prev, { subscriptionData }) => {
+              const { projectCountsChanged } = subscriptionData.data
+              const projectCounts = prev.projectCounts
+              console.log('original counts', projectCounts)
+              console.log('changed counts', projectCountsChanged)
+              return {
+                projectCounts: projectCountsChanged
+              }
+            }
+          })
+        }
+        return <AdminCountsComponent {...{nav, loading, projectCounts, startSubscriptions}} />
+        // if (loading) { return <div>LOADING...</div> }
+        // return <div>
+        //   <MenuItemLabelled nav={() => nav('/admin')} label='active' color='green' count={projectCounts.active} />
+        //   <MenuItemLabelled nav={() => nav('/admin/closed')} label='closed' color='grey' count={projectCounts.closed} />
+        //   <MenuItemLabelled nav={() => nav('/admin/old')} label='old' color='grey' count={projectCounts.old} />
+        // </div>
       }}
     </Query>
     <Menu.Item>
