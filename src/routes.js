@@ -6,7 +6,7 @@ export default [
   {
     path: '/signin',
     component: asyncComponent({
-      loader: () => import('./Signin'),
+      loader: () => import('./Signin.js'),
     })
   },
   {
