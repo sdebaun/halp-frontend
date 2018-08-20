@@ -3,7 +3,7 @@ import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { ensureReady, After } from '@jaredpalmer/after';
 import './client.css';
-import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-offline/semantic.min.css';
 import routes from './routes';
 import createApolloClient from './createApolloClient';
 import { ApolloProvider } from 'react-apollo';
