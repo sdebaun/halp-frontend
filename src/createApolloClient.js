@@ -9,10 +9,10 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 
-const HALP_BACKEND_HTTP_URI = process.env.HALP_BACKEND_HTTP_URI ||
+const HALP_BACKEND_HTTP_URI = process.env.RAZZLE_HALP_BACKEND_HTTP_URI ||
   'http://localhost:4000/graphql'
 
-const HALP_BACKEND_WS_URI = process.env.HALP_BACKEND_WS_URI ||
+const HALP_BACKEND_WS_URI = process.env.RAZZLE_HALP_BACKEND_WS_URI ||
   'ws://localhost:4000/graphql';
 
 export const PROJECT_STATE_ACTIVE = 'active'
