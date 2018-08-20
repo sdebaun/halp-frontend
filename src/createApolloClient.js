@@ -9,6 +9,12 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 
+const HALP_BACKEND_HTTP_URI = process.env.HALP_BACKEND_HTTP_URI ||
+  'http://localhost:4000/graphql'
+
+const HALP_BACKEND_WS_URI = process.env.HALP_BACKEND_WS_URI ||
+  'ws://localhost:4000/graphql';
+
 export const PROJECT_STATE_ACTIVE = 'active'
 export const PROJECT_STATE_CLOSED = 'closed'
 export const PROJECT_STATE_OLD = 'old'
@@ -58,13 +64,16 @@ function createApolloClient({ ssrMode }) {
     : new InMemoryCache().restore(window.__APOLLO_STATE__)
 
   const httpLink = createHttpLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: HALP_BACKEND_HTTP_URI,
+    // uri: 'http://localhost:4000/graphql',
+    // uri: 'http://:4000/graphql',
     credentials: 'same-origin',
     fetch,
   })
 
   const wsLink = ssrMode ? null : new WebSocketLink({
-    uri: 'ws://localhost:4000/graphql',
+    uri: HALP_BACKEND_WS_URI,
+    // uri: 'ws://localhost:4000/graphql',
     options: {
       reconnect: true
     }
