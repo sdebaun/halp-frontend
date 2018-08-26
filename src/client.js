@@ -8,7 +8,10 @@ import routes from './routes';
 import createApolloClient from './createApolloClient';
 import { ApolloProvider } from 'react-apollo';
 
-const client = createApolloClient({ ssrMode: false })
+const client = createApolloClient({
+  ssrMode: false,
+  hostname: window.location.hostname,
+})
 
 ensureReady(routes).then(data =>
   hydrate(

@@ -17,7 +17,10 @@ server
   .get('/*', async (req, res) => {
 
     try {
-      const client = createApolloClient({ ssrMode: true })
+      const client = createApolloClient({
+        ssrMode: true,
+        hostname: req.hostname,
+      })
   
       const customRenderer = node => {
         const App = <ApolloProvider client={client}>{node}</ApolloProvider>;

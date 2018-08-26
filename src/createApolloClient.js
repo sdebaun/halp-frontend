@@ -15,11 +15,11 @@ import { getMainDefinition } from 'apollo-utilities';
 // const HALP_BACKEND_WS_URI = process.env.RAZZLE_HALP_BACKEND_WS_URI ||
 //   'ws://localhost:4000/graphql';
 
-const HALP_BACKEND_HTTP_URI = 
-  `http://${window.location.hostname}/graphql`
+// const HALP_BACKEND_HTTP_URI = 
+//   `http://${window.location.hostname}/graphql`
 
-const HALP_BACKEND_WS_URI =
-  `ws://${window.location.hostname}/graphql`
+// const HALP_BACKEND_WS_URI =
+//   `ws://${window.location.hostname}/graphql`
 
 export const PROJECT_STATE_ACTIVE = 'active'
 export const PROJECT_STATE_CLOSED = 'closed'
@@ -70,11 +70,17 @@ const resolvers = {
   }
 }
 
-function createApolloClient({ ssrMode }) {
+function createApolloClient({ ssrMode, hostname }) {
   const cache = ssrMode
     ? new InMemoryCache()
     : new InMemoryCache().restore(window.__APOLLO_STATE__)
 
+  const HALP_BACKEND_HTTP_URI = 
+    `http://${hostname}:4000/graphql`
+  
+  const HALP_BACKEND_WS_URI =
+    `ws://${hostname}:4000/graphql`
+  
   const httpLink = createHttpLink({
     uri: HALP_BACKEND_HTTP_URI,
     // uri: 'http://localhost:4000/graphql',
