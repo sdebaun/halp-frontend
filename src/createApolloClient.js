@@ -36,6 +36,12 @@ const defaults = {
       id: '1',
       email: 'sdebaun74@gmail.com',
       password: 'sdebaun',
+    },
+    {
+      __typename: 'User',
+      id: '2',
+      email: 'yourmom@burningman.org',
+      password: 'yourmom',
     }
   ],
 }
