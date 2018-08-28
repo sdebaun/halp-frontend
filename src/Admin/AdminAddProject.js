@@ -56,7 +56,7 @@ const FormProjectAdd = withRouter(_FormProjectAdd)
 
 const AdminAddProject = ({id}) =>
 <div>
-  <QuickNav><span style={{color: '#999'}}>ADDING PROJECT</span></QuickNav>
+  <QuickNav><span style={{color: '#999'}}>ADDING VO</span></QuickNav>
   <FormProjectAdd/>
 </div>
 

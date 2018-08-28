@@ -27,7 +27,7 @@ const ButtonSignOut = () =>
 
 const ButtonCreateProject = ({nav}) =>
     <Button fluid primary size='huge' onClick={() => nav('/admin/add')}>
-      + add project
+      add volunteer opportunity
     </Button>
 
 const MenuItemLabelled = ({nav, label, count, color}) =>
