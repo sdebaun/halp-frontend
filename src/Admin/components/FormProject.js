@@ -17,7 +17,7 @@ const schema = object().shape({
     .max(30, 'The title shouldn\'t be that long, less than 30 letters please!')
     .required('Enter a title.'),
   pitch: string()
-    .max(160, 'The pitch shouldn\'t be longer than a tweet, 160 letters please!')
+    // .max(160, 'The pitch shouldn\'t be longer than a tweet, 160 letters please!')
     .required('Enter a pitch.'),
   sourceGroup: string()
     .max(30, 'The source shouldn\'t be longer than 30 letters.')
