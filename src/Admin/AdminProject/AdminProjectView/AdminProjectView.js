@@ -12,6 +12,7 @@ import TimeRange from '../../../components/TimeRange';
 import PeopleStats from '../../../components/PeopleStats';
 import SentPersons, { SentPersonAdd } from './SentPersons';
 import Details from './Details';
+import Perks from './Perks';
 
 import moment from 'moment';
 import Moment from 'react-moment';
@@ -53,6 +54,9 @@ const AdminProjectViewStateless = ({project}) =>
           </Segment>
           <Segment basic>
             <Details {...project} />
+          </Segment>
+          <Segment basic>
+            <Perks {...project} />
           </Segment>
         </Grid.Column>
         <Grid.Column>

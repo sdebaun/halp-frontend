@@ -63,6 +63,12 @@ const DetailItem = ({detail: {text}}) =>
     <List.Content>{text}</List.Content>
   </List.Item>
 
+const PerkItem = ({perk: {text}}) =>
+  <List.Item style={{padding: '1.5rem'}}>
+    <Icon name='checkmark'/>
+    <List.Content>{text}</List.Content>
+  </List.Item>
+
 const DetailList = ({id, details}) =>
   details.length === 0 ?
     '' :
@@ -70,6 +76,16 @@ const DetailList = ({id, details}) =>
       <h2>They are looking for...</h2>
       <List divided verticalAlign='middle' size='large'>
         { details.map((d,i) => <DetailItem key={i} projectId={id} detail={d} />) }
+      </List>
+    </div>
+
+const PerkList = ({id, perks}) =>
+  perks.length === 0 ?
+    '' :
+    <div>
+      <h2>They will hook you up with...</h2>
+      <List divided verticalAlign='middle' size='large'>
+        { perks.map((p,i) => <PerkItem key={i} projectId={id} perk={p} />) }
       </List>
     </div>
 
@@ -111,6 +127,9 @@ const HomeSlide = ({project}) =>
         </Segment>
         <Segment basic style={{fontSize: '1.5rem', color: '#555'}}>
           <DetailList {...project}/>
+        </Segment>
+        <Segment basic style={{fontSize: '1.5rem', color: '#555'}}>
+          <PerkList {...project}/>
         </Segment>
       </Grid.Column>
       <Grid.Column>

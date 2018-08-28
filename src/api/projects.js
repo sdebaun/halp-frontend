@@ -81,6 +81,9 @@ export const QUERY_ACTIVE_PROJECTS_DETAILED = gql`
       details {
         text
       }
+      perks {
+        text
+      }
     }
   }
 `
@@ -109,6 +112,10 @@ export const QUERY_GET_PROJECT = gql`
       contactAddress
       contactName
       details {
+        id
+        text
+      }
+      perks {
         id
         text
       }
@@ -164,6 +171,10 @@ export const SUBSCRIPTION_PROJECT_CHANGED = gql`
         id
         text
       }
+      perks {
+        id
+        text
+      }
       sentPersonsNeeded
       sentPersonsScore
       sentPersonsCount
@@ -213,6 +224,10 @@ export const SUBSCRIPTION_PROJECT_ADDED = gql`
       contactAddress
       contactName
       details {
+        id
+        text
+      }
+      perks {
         id
         text
       }
@@ -375,6 +390,40 @@ export const MUTATION_UPDATE_PROJECT_DETAIL = gql`
     }
   }
 `
+
+export const MUTATION_ADD_PROJECT_PERK = gql`
+  mutation addProjectPerk(
+    $projectId: String!,
+    $text: String!
+  ) {
+    addProjectPerk(
+      projectId: $projectId,
+      text: $text
+    ) {
+      id
+    }
+  }
+`
+
+export const MUTATION_DELETE_PROJECT_PERK = gql`
+  mutation deleteProjectPerk(
+    $id: String!,
+  ) {
+    deleteProjectPerk(id: $id)
+  }
+`
+
+export const MUTATION_UPDATE_PROJECT_PERK = gql`
+  mutation updateProjectPerk(
+    $id: String!,
+    $text: String!
+  ) {
+    updateProjectPerk(id: $id, text: $text) {
+      id
+    }
+  }
+`
+
 
 export const MUTATION_ADD_PROJECT_SENTPERSON = gql`
   mutation addProjectSentPerson(
